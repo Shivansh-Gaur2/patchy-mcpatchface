@@ -70,7 +70,7 @@ Compilation and a passing happy-path test are evidence. They do not establish ev
 ### Codex plugin
 
 ```text
-codex plugin marketplace add Shivansh-Gaur2/patchy-mcpatchface --ref main
+codex plugin marketplace add Shivansh-Gaur2/patchy-mcpatchface --ref master
 codex plugin add patchy-mcpatchface@patchy-mcpatchface
 ```
 
