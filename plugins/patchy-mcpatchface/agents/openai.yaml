@@ -1,5 +1,5 @@
 interface:
   display_name: "Patchy McPatchface"
-  short_description: "Your codebase raccoon with receipts"
+  short_description: "Senior-engineer judgment, with receipts"
   brand_color: "#D97706"
-  default_prompt: "Use $patchy-mcpatchface to make this change with explicit scope, reuse checks, proof obligations, and residual-risk reporting."
+  default_prompt: "Use $patchy-mcpatchface to protect my stated constraints, reuse the right owner, choose the smallest cohesive design, and prove what the change does and does not establish."

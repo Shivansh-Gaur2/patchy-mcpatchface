@@ -20,12 +20,13 @@ For a tiny local edit, confirm the target and nearest existing implementation, m
 Read repository guidance, the relevant entry point, nearby tests, and the commands the repository exposes. State:
 
 - Goal: the observable behavior requested.
+- Constraints: files, modules, APIs, data, dependencies, migrations, and explicit exclusions that are hard limits unless the user expands scope.
 - Boundaries: files, modules, APIs, or data that may and may not change.
 - Reuse leads: existing services, policies, types, adapters, fixtures, and error conventions to inspect.
 - Invariants: behavior that must remain true.
 - Unknowns: facts that could change the design or confidence.
 
-The card is ready when the likely behavior path, owner of each relevant rule, likely touched files, and proof obligations are named. Ask only when the missing answer changes the implementation; otherwise make the smallest reversible assumption and record it.
+The card is ready when the likely behavior path, owner of each relevant rule, hard constraints, likely touched files, and proof obligations are named. Treat a stated exclusion as a design input, not a suggestion. Ask only when the missing answer changes the implementation; otherwise make the smallest reversible assumption and record it.
 
 ## Spend context in stages
 
@@ -50,11 +51,11 @@ Trace the changed path from entry point through decisions, state changes, persis
 
 For business logic, identify the decision table: inputs, branches, side effects, rejection paths, authorization, timing, retries, idempotency, and failure behavior. Follow only the branches relevant to the request, then widen when the changed boundary makes another branch reachable.
 
-## Challenge the obvious design when it matters
+## Exercise architecture judgment when it matters
 
-Start with the repository's existing seam. When the request has a material design choice, compare that approach with one credible alternative: a smaller extension, a different existing owner, or a new boundary. Judge them by ownership, behavior risk, migration cost, testability, and long-term duplication. Choose one and record the reason.
+Start with the repository's existing seam. When the request has a material design choice, compare that approach with one credible alternative: a smaller extension, a different existing owner, or a new boundary. Judge them by ownership, cohesion, behavior risk, interface complexity, migration cost, testability, and long-term duplication. Choose the smallest design that keeps one decision with one owner and record why.
 
-Do not manufacture novelty for a local change. Raise an optional better direction only when the evidence shows that the requested approach would duplicate a decision, deepen a fragile boundary, or leave a recurring problem unsolved. Keep optional work out of the implementation unless the user expands scope.
+Do not manufacture novelty for a local change. Raise an optional better direction only when the evidence shows that the requested approach would duplicate a decision, deepen a fragile boundary, or leave a recurring problem unsolved. Distinguish the required patch from an optional follow-up; do not silently broaden the story to implement the follow-up.
 
 ## Pass the reuse gate
 
@@ -71,6 +72,8 @@ Before accepting new code, compare nearby helpers and call sites. Preserve one s
 Choose the smallest coherent change that keeps policy with its existing owner and follows the repository's dependency, naming, error, and test conventions. Put unrelated cleanup in a follow-up ledger unless it is required for correctness, security, build health, or the requested behavior.
 
 Turn invariants into scenarios. Cover the happy path and the invalid input, permission, missing-state, duplicate or retry, timeout, persistence, and external-boundary cases that the change can alter. Use the repository's test seam and fixtures first.
+
+When the requested behavior is new and no focused test exists, find the nearest seam that can observe the decision: a characterization test, contract test, integration boundary, or acceptance check. Add the narrowest meaningful proof when feasible. If no seam can establish the behavior, do not manufacture certainty from a green unrelated suite; name the unverified scenario and the missing seam.
 
 Verify in proportion to risk:
 

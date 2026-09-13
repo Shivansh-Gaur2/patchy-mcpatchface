@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.0 — 2026-09-13
+
+- Reframed Patchy as a senior-engineer workflow: hard constraints, evidence-backed architecture judgment, bounded codebase learning, and explicit proof gaps.
+- Added a benchmark contract for protected boundaries and design decisions that could otherwise create duplicate abstractions.
+
 ## 0.3.2 — 2026-09-13
 
 - Replaced example-only TOON checks with official strict decoding and encoder round-trip validation.

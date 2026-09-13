@@ -16,9 +16,22 @@
   <img src="https://img.shields.io/badge/license-MIT-1f2937?style=flat-square" alt="MIT license">
 </p>
 
-Small requests are where agents get oddly ambitious. A partial refund becomes a new service. A familiar rule gets copied into a handler. The test proves one refund succeeds and nobody checks the payment state it skipped.
+Patchy is a senior-engineer raccoon for the moments when “just make the change” is not enough. It protects the constraints you name, finds behavior that already owns the decision, compares a better direction when the design is material, and tells you what the proof actually covers.
 
-Patchy starts with the path around the change. It finds the current owner of a behavior, looks for code worth reusing, turns the relevant rules into proof obligations, and states what the final checks did and did not establish.
+It is built for the uncomfortable parts of agentic coding: the file that must not change, the policy hidden behind a second caller, the existing helper an agent might duplicate, the new behavior with no test seam, and the business-logic walkthrough that should answer one question without narrating the entire repository.
+
+## The problems Patchy is built to handle
+
+| You should not have to repeat | Patchy's working behavior |
+| --- | --- |
+| “Do not touch these files, APIs, or migrations.” | Capture them as hard constraints before choosing a design. |
+| “Use the existing implementation if one exists.” | Search for the current owner, policies, helpers, fixtures, and callers before adding an abstraction. |
+| “Make this architecturally clean.” | For a material choice, compare one credible alternative and prefer the smallest cohesive design with one owner per decision. |
+| “Could there be business logic outside this ticket?” | Widen only for sibling callers, shared state, permissions, persistence, retries, or external boundaries that can change the patch or proof. |
+| “There is no relevant test yet.” | Find the nearest characterization, contract, integration, or acceptance seam; otherwise name the missing proof rather than treating a green unrelated suite as safety. |
+| “Explain this without a repository dump.” | Answer first, distinguish observed facts from inference and unknowns, and stop tracing when more context cannot change the answer. |
+
+Patchy does not promise omniscience. It cannot prove every unknown business rule or replace a maintainer’s domain knowledge. Its job is to make the investigation proportional, make a gap visible, and keep a useful better direction separate from unauthorized scope expansion.
 
 ## Before and after
 
@@ -44,7 +57,7 @@ Proof:
 
 [The full refund example](examples/refund-boundary.md) shows the investigation. [The checkout example](examples/map-a-checkout-flow.md) shows how Patchy explains a behavior path.
 
-## How it works
+## How a senior raccoon works
 
 The repository includes a Codex marketplace, a plugin bundle, a portable `SKILL.md`, and instruction fallbacks. The root content is the source of truth. The marketplace payload is generated from it, and the checks catch drift.
 
@@ -58,10 +71,13 @@ The repository includes a Codex marketplace, a plugin bundle, a portable `SKILL.
 The working loop is simple:
 
 ```text
-Rummage → find the behavior and the code that owns it
-Patch    → make the smallest change that fits
-Clipboard → report what passed, what did not run, and what is still unknown
+Constraints → capture protected surfaces and exclusions
+Rummage    → find the behavior and the code that owns it
+Patch       → make the smallest cohesive change that fits
+Clipboard   → report what passed, what did not run, and what is still unknown
 ```
+
+Patchy introduces an alternative only when evidence shows the requested route would duplicate a decision, deepen a fragile boundary, or leave a recurring problem unsolved. The required patch stays separate from that optional direction unless you expand the scope.
 
 Compilation and a passing happy-path test are evidence. They do not establish every business rule that a change can reach. [Proof tiers](references/proof-tiers.md) make that boundary explicit.
 
@@ -102,16 +118,18 @@ The root [SKILL.md](SKILL.md) is the portable entry point. [AGENTS.md](AGENTS.md
 
 ## Evidence
 
-The current release has executable repository evidence, but not yet comparative agent benchmarks. On the `0.3.0` release line, `npm test` passes all four checks:
+The current release has executable repository evidence, but not yet comparative agent benchmarks. The `0.3.2` release validates the package, local documentation links, strict TOON receipts, token fixture, fallback instructions, and generated marketplace copy:
 
 ```text
 plugin package is coherent
-TOON receipt examples are internally consistent
+local Markdown links are valid
+TOON receipt examples pass official strict decoding and round-trip validation
+TOON token comparison passes its fixture assertions
 fallback copies are aligned
 marketplace plugin package is aligned
 ```
 
-These checks prove that the shipped package, generated marketplace copy, fallback instructions, local documentation links, and compact-receipt examples agree. They do not prove that Patchy improves every coding task; the benchmark cases below still require paired runs with and without Patchy.
+These checks prove the shipped package and its references agree; they do not prove that Patchy improves every coding task. The benchmark cases below—including [constraint and design judgment](benchmarks/cases/constraint-and-design.md)—still require paired runs with and without Patchy.
 
 ## Benchmarks
 

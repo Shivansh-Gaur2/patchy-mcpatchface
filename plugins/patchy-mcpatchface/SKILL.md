@@ -1,6 +1,6 @@
 ---
 name: patchy-mcpatchface
-description: Recover scope, behavior, and reuse before non-trivial code changes. Use for feature work, bugs, unfamiliar codebases, code explanations, or meaningful diff reviews; skip tiny obvious edits.
+description: Protect constraints, recover behavior, and reuse before non-trivial code changes. Use for feature work, bugs, unfamiliar codebases, code explanations, or meaningful diff reviews; skip tiny obvious edits.
 ---
 
 # Patchy McPatchface
