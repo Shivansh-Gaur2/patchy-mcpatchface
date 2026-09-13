@@ -10,3 +10,4 @@ Each result needs the transcript, final diff, commands and output, task acceptan
 | [hidden-invariant](hidden-invariant.md) | A ticket names one caller but the actual rule has siblings. |
 | [missing-test-seam](missing-test-seam.md) | A novel behavior has no focused test already waiting. |
 | [behavior-map](behavior-map.md) | An explanation confuses evidence, inference, and unknowns. |
+| [constraint-and-design](constraint-and-design.md) | A protected boundary and a tempting duplicate abstraction distort the requested patch. |
