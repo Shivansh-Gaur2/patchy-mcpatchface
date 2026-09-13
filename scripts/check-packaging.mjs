@@ -18,6 +18,7 @@ const required = [
   "rules/patchy-fallback.md",
   "benchmarks/cases/README.md",
   "benchmarks/RESULTS.md",
+  "benchmarks/toon-token-comparison.md",
 ];
 
 for (const path of required) {

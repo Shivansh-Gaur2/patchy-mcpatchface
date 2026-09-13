@@ -117,6 +117,8 @@ These checks prove that the shipped package, generated marketplace copy, fallbac
 
 Patchy has no performance or safety numbers yet. Its [benchmark suite](benchmarks/README.md) has named cases, a scorecard, and a method for comparing the same agent with and without Patchy. The [results ledger](benchmarks/RESULTS.md) defines the required artifacts and the decision rule for whether the skill earns its context cost. It will publish raw diffs, test output, failure cases, and counterexamples before making claims about speed, tokens, or correctness.
 
+For repeated, uniform evidence records, the [TOON comparison](benchmarks/toon-token-comparison.md) measures a 27.6% reduction against compact JSON and 4.1% against a concise Markdown table with a pinned `o200k_base` tokenizer. This is a format-level result for that fixture, not a claim that every task or Codex model uses fewer tokens.
+
 Run the repository checks with:
 
 ```text
