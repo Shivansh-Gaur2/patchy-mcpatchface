@@ -2,30 +2,28 @@
 
 Audited: 2026-09-13.
 
-## Source
+## What Ponytail demonstrates
 
-[Ponytail's README](https://github.com/DietrichGebert/ponytail) is the comparison point. It presents a recognizable character, a one-line promise, a concrete before/after, explicit safety boundaries, installation instructions, examples, benchmark methodology and limitations, development guidance, and an MIT license.
+[Ponytail](https://github.com/DietrichGebert/ponytail) is more than a clever prompt: it has a memorable character, plugin distribution, multiple commands, portable fallbacks, lifecycle integrations, validation, benchmarks with disclosed limitations, and a release surface. Its repository makes it easy to see what exists, how to install it, and what evidence supports its claims.
 
-## What Patchy now matches
+## What Patchy now ships
 
-| Trust signal | Patchy implementation |
+| Product surface | Patchy implementation |
 | --- | --- |
-| Recognizable identity | Mascot asset, character name, and concise tagline. |
-| Immediate problem framing | Opening story and partial-refund before/after. |
-| Concrete mechanism | Rummage → Patch → Clipboard loop. |
-| Safety boundary | Explicit proof tiers and residual-risk reporting. |
-| Installation surface | Documented clone path for Codex on Windows, macOS, and Linux. |
-| Examples | Feature-change and code-explanation examples. |
-| Benchmarks | A public, reproducible plan without invented claims. |
-| Project hygiene | Contribution guide and MIT license. |
+| Identity and concrete use case | Mascot, one-line promise, and feature plus explanation examples. |
+| Codex distribution | Root marketplace identifier and `.codex-plugin/plugin.json`. |
+| Focused entry points | `patchy`, `patchy-rummage`, `patchy-clipboard`, and `patchy-help`. |
+| Portable fallback | `SKILL.md`, `AGENTS.md`, and Copilot instructions. |
+| Drift protection | Node checks enforce plugin metadata, skill presence, and fallback-copy alignment. |
+| CI and release hygiene | GitHub Actions, `package.json`, and a changelog. |
+| Benchmark foundation | Four named task contracts and a scorecard method. |
 
-## What Patchy does not claim yet
+## Deliberate gaps
 
-Ponytail ships a mature multi-agent plugin with hooks, adapters, modes, commands, reproducible results, and measured outcomes. Patchy is currently a portable skill bundle. It does not claim compatibility with every agent platform, automatic lifecycle activation, or any performance or safety metric until those integrations and experiments exist.
+Patchy does not ship lifecycle hooks, autonomous activation, a broad host matrix, a package registry release, translated documentation, or performance numbers. Those are product promises, not folders. Add one only after it has an implementation, a tested installation path, and a reason it improves the core Rummage → Patch → Clipboard loop.
 
 ## Next evidence gates
 
-1. Run the benchmark plan on one real open-source repository.
-2. Publish raw diffs, test outputs, and failure cases.
-3. Add a Codex plugin only if installation friction proves to be a real adoption problem.
-4. Add other agent adapters only after verifying that each host preserves the skill's invocation and context behavior.
+1. Install the Codex plugin from the public repository and verify all four skills in a new task.
+2. Run the benchmark cases against a pinned open-source repository; publish raw artifacts and failure cases.
+3. Add a host adapter only when its instruction model preserves Patchy's boundaries and proof reporting.
