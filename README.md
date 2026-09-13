@@ -46,7 +46,7 @@ Proof:
 
 ## What you get
 
-Patchy ships a real Codex plugin bundle, a portable `SKILL.md`, and lightweight instruction fallbacks. The full workflow has one canonical home; validation catches drift in the copies that other hosts read.
+Patchy ships a real Codex marketplace, a plugin bundle, a portable `SKILL.md`, and lightweight instruction fallbacks. The repository root is the source of truth; the marketplace payload is generated from it and validation catches drift.
 
 | Entry point | Use it for |
 | --- | --- |
@@ -70,7 +70,7 @@ Compilation and a passing happy-path test are evidence. They do not establish ev
 ### Codex plugin
 
 ```text
-codex plugin marketplace add Shivansh-Gaur2/patchy-mcpatchface
+codex plugin marketplace add Shivansh-Gaur2/patchy-mcpatchface --ref main
 codex plugin add patchy-mcpatchface@patchy-mcpatchface
 ```
 
@@ -96,7 +96,7 @@ Run the repository checks with:
 npm test
 ```
 
-That verifies the plugin package, every shipped skill, and the fallback copies. GitHub Actions runs the same check on pushes and pull requests.
+That verifies the marketplace catalog, generated plugin package, every shipped skill, and the fallback copies. GitHub Actions runs the same check on pushes and pull requests.
 
 ## Contributing
 

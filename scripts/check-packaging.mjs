@@ -6,6 +6,7 @@ const required = [
   "README.md",
   "LICENSE",
   "plugin.json",
+  ".agents/plugins/marketplace.json",
   ".codex-plugin/plugin.json",
   "SKILL.md",
   "skills/patchy/SKILL.md",
@@ -23,6 +24,7 @@ for (const path of required) {
 
 const plugin = JSON.parse(await readFile(resolve(root, ".codex-plugin/plugin.json"), "utf8"));
 const packageJson = JSON.parse(await readFile(resolve(root, "package.json"), "utf8"));
+const marketplace = JSON.parse(await readFile(resolve(root, ".agents/plugins/marketplace.json"), "utf8"));
 
 if (plugin.name !== "patchy-mcpatchface") throw new Error("plugin manifest name must be patchy-mcpatchface");
 if (plugin.version !== packageJson.version) throw new Error("plugin and package versions must match");
@@ -46,5 +48,10 @@ for (const skill of ["patchy", "patchy-rummage", "patchy-clipboard", "patchy-hel
 const portableSkill = await readFile(resolve(root, "SKILL.md"), "utf8");
 if (!portableSkill.startsWith("---\nname: patchy-mcpatchface\n")) throw new Error("portable skill has invalid frontmatter");
 if (!portableSkill.includes("skills/patchy/SKILL.md")) throw new Error("portable skill must point to the canonical workflow");
+
+const marketEntry = marketplace.plugins?.find((entry) => entry.name === plugin.name);
+if (marketplace.name !== plugin.name || !marketEntry) throw new Error("marketplace must expose this plugin by name");
+if (marketEntry.source?.source !== "local" || marketEntry.source?.path !== "./plugins/patchy-mcpatchface") throw new Error("marketplace source path is invalid");
+if (marketEntry.policy?.installation !== "AVAILABLE" || marketEntry.policy?.authentication !== "ON_INSTALL") throw new Error("marketplace policy is invalid");
 
 console.log("plugin package is coherent");

@@ -1,0 +1,5 @@
+interface:
+  display_name: "Patchy McPatchface"
+  short_description: "Your codebase raccoon with receipts"
+  brand_color: "#D97706"
+  default_prompt: "Use $patchy-mcpatchface to make this change with explicit scope, reuse checks, proof obligations, and residual-risk reporting."

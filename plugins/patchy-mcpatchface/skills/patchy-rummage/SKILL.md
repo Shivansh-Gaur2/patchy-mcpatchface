@@ -1,0 +1,21 @@
+---
+name: patchy-rummage
+description: Map an unfamiliar code or business-logic path without changing files.
+disable-model-invocation: true
+---
+
+# Patchy Rummage
+
+Inspect; do not edit unless the user separately asks for a change. Start from the question's entry point and trace only the path needed to answer it.
+
+Return a compact map first:
+
+- entry point and caller;
+- main decisions and their owners;
+- data movement and side effects;
+- important failure paths;
+- tests or other evidence that support the map.
+
+Then explain the requested path in order with file and symbol references. Mark each statement as **Observed**, **Inferred**, or **Unknown**. Identify the decision table only where it changes the answer: inputs, branches, authorization, state transitions, retries, and errors.
+
+Do not turn a focused question into a repository tour. If finding exposes a risk or cleanup opportunity, list it separately with its evidence; do not repair it.
