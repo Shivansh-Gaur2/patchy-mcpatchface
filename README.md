@@ -82,7 +82,13 @@ codex plugin add patchy-mcpatchface@patchy-mcpatchface
 
 Start a new Codex task after installation. Invoke the plugin skills with `@patchy`, `@patchy-rummage`, or `@patchy-clipboard`.
 
-The marketplace is published from `master`. If you previously added an older source under the same marketplace name, remove it first with `codex plugin marketplace remove patchy-mcpatchface`, then run the two commands above.
+The marketplace is published from `master`. In this checkout, the validated release line is on `master`, while the cached `origin/main` ref points to the older portable-skill history. If GitHub shows an older version, confirm the public branch state, then either make `master` the repository's default branch or merge the release line into `main` and publish from `main` consistently. After changing the source, remove the cached marketplace entry and reinstall:
+
+```text
+codex plugin marketplace remove patchy-mcpatchface
+codex plugin marketplace add Shivansh-Gaur2/patchy-mcpatchface --ref master
+codex plugin add patchy-mcpatchface@patchy-mcpatchface
+```
 
 ### Portable skill bundle
 
@@ -94,9 +100,22 @@ git clone https://github.com/Shivansh-Gaur2/patchy-mcpatchface.git "$env:USERPRO
 
 The root [SKILL.md](SKILL.md) is the portable entry point. [AGENTS.md](AGENTS.md) and [Copilot instructions](.github/copilot-instructions.md) are instruction-only fallbacks for hosts that read those files; they do not pretend to provide plugin commands or lifecycle hooks.
 
+## Evidence
+
+The current release has executable repository evidence, but not yet comparative agent benchmarks. On the `0.3.0` release line, `npm test` passes all four checks:
+
+```text
+plugin package is coherent
+TOON receipt examples are internally consistent
+fallback copies are aligned
+marketplace plugin package is aligned
+```
+
+These checks prove that the shipped package, generated marketplace copy, fallback instructions, local documentation links, and compact-receipt examples agree. They do not prove that Patchy improves every coding task; the benchmark cases below still require paired runs with and without Patchy.
+
 ## Benchmarks
 
-Patchy has no performance or safety numbers yet. Its [benchmark suite](benchmarks/README.md) has named cases, a scorecard, and a method for comparing the same agent with and without Patchy. It will publish raw diffs, test output, failure cases, and counterexamples before making claims about speed, tokens, or correctness.
+Patchy has no performance or safety numbers yet. Its [benchmark suite](benchmarks/README.md) has named cases, a scorecard, and a method for comparing the same agent with and without Patchy. The [results ledger](benchmarks/RESULTS.md) defines the required artifacts and the decision rule for whether the skill earns its context cost. It will publish raw diffs, test output, failure cases, and counterexamples before making claims about speed, tokens, or correctness.
 
 Run the repository checks with:
 
@@ -108,7 +127,7 @@ That verifies the marketplace catalog, generated plugin package, every shipped s
 
 ## Contributing
 
-[CONTRIBUTING.md](CONTRIBUTING.md) explains what belongs in Patchy. [CHANGELOG.md](CHANGELOG.md) records releases. A rule earns its place only when it changes a real engineering decision.
+[CONTRIBUTING.md](CONTRIBUTING.md) explains what belongs in Patchy. [CHANGELOG.md](CHANGELOG.md) records releases, and the [maintainer checklist](docs/maintainer-checklist.md) covers the GitHub settings and release controls that cannot be enforced by repository files. A rule earns its place only when it changes a real engineering decision.
 
 ## Why the name?
 

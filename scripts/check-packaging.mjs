@@ -17,6 +17,7 @@ const required = [
   "references/toon-receipts.md",
   "rules/patchy-fallback.md",
   "benchmarks/cases/README.md",
+  "benchmarks/RESULTS.md",
 ];
 
 for (const path of required) {

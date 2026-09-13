@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Added repository health files, contributor templates, least-privilege CI permissions, Dependabot updates for GitHub Actions, and a maintainer checklist for GitHub settings.
+- Added local Markdown-link validation and a benchmark results ledger with a predeclared value decision rule.
+
 ## 0.3.0 — 2026-09-13
 
 - Added a context-budget workflow: targeted retrieval first, then progressive widening only when evidence changes the design or proof plan.

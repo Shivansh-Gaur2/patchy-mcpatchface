@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "build:marketplace": "node scripts/build-marketplace.mjs",
-    "check": "node scripts/check-packaging.mjs && node scripts/check-toon-examples.mjs && node scripts/check-fallback-copies.mjs && node scripts/check-marketplace-package.mjs",
+    "check": "node scripts/check-packaging.mjs && node scripts/check-markdown-links.mjs && node scripts/check-toon-examples.mjs && node scripts/check-fallback-copies.mjs && node scripts/check-marketplace-package.mjs",
     "test": "npm run check"
   },
   "license": "MIT"
