@@ -10,23 +10,23 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/skill-SKILL.md-1f2937?style=flat-square" alt="Portable SKILL.md skill">
-  <img src="https://img.shields.io/badge/approach-reuse%20before%20rewrite-D97706?style=flat-square" alt="Reuse before rewrite">
+  <img src="https://img.shields.io/badge/Codex-plugin%20ready-D97706?style=flat-square" alt="Codex plugin ready">
+  <img src="https://img.shields.io/badge/skills-4-1f2937?style=flat-square" alt="Four focused skills">
   <img src="https://img.shields.io/badge/proof-behavior%20first-0F766E?style=flat-square" alt="Behavior first proof">
   <img src="https://img.shields.io/badge/license-MIT-1f2937?style=flat-square" alt="MIT license">
 </p>
 
-Small requests are where agents get oddly ambitious. A partial refund becomes a new service. A familiar rule gets copied into a handler. The test proves the happy case and nobody checks the payment state it skipped.
+Small requests are where agents get oddly ambitious. A partial refund becomes a new service. A familiar rule gets copied into a handler. The test proves one refund succeeds and nobody checks the payment state it skipped.
 
-Patchy reads the code and tests around the change first. It looks for the current owner of the behavior, checks what can be reused, and reports what the checks covered when the patch is finished.
+Patchy reads the path around the change first. It finds the current owner of a behavior, looks for code worth reusing, turns the relevant rules into proof obligations, and says what the final checks did and did not establish.
 
 ## Before and after
 
 Say you need partial refunds.
 
-An ordinary agent can add `PartialRefundService`, repeat the authorization check, touch a data model it did not need to touch, and test that one refund succeeds.
+An ordinary agent can add `PartialRefundService`, repeat the authorization check, touch a data model it did not need to touch, and test one happy path.
 
-Patchy starts by finding the refund owner, authorization policy, audit path, and payment states. That gives it a useful checklist:
+Patchy finds the refund owner, authorization policy, audit path, and payment states. That gives it a useful contract:
 
 ```text
 Reuse: PaymentService.refund() and the existing authorization policy
@@ -44,17 +44,18 @@ Proof:
 
 [The full refund example](examples/refund-boundary.md) shows the investigation. [The checkout example](examples/map-a-checkout-flow.md) shows how Patchy explains a behavior path.
 
-## How it works
+## What you get
 
-Patchy has three modes:
+Patchy ships a real Codex marketplace, a plugin bundle, a portable `SKILL.md`, and lightweight instruction fallbacks. The repository root is the source of truth; the marketplace payload is generated from it and validation catches drift.
 
-| Mode | What it does |
+| Entry point | Use it for |
 | --- | --- |
-| Patch | Builds or fixes a feature with a clear scope, a reuse check, and checks that fit the risk. |
-| Rummage | Explains an unfamiliar behavior path without making you read the whole repository. |
-| Clipboard | Reviews a diff for scope drift, repeated logic, and behavior that still lacks evidence. |
+| `patchy` | A feature, bug fix, or refactor where scope, behavior, reuse, or proof could go wrong. |
+| `patchy-rummage` | A business-logic or code-path explanation without editing files. |
+| `patchy-clipboard` | An existing diff that needs a scope, reuse, and proof audit. |
+| `patchy-help` | A quick reminder of the entry points. |
 
-The usual loop is simple:
+The loop is deliberately simple:
 
 ```text
 Rummage → find the behavior and the code that owns it
@@ -62,41 +63,44 @@ Patch    → make the smallest change that fits
 Clipboard → report what passed, what did not run, and what is still unknown
 ```
 
-Compilation and a passing happy-path test are useful evidence. They do not establish every affected business rule. [proof-tiers.md](references/proof-tiers.md) describes the evidence Patchy reports.
-
-## Use it
-
-```text
-$patchy-mcpatchface add partial refunds without changing the billing schema
-```
-
-Use Patchy for feature work, bug fixes, unfamiliar codebases, focused code explanations, and meaningful diff reviews. For a tiny local edit, it confirms the target and nearby reuse before making the change.
+Compilation and a passing happy-path test are evidence. They do not establish every business rule that a change can reach. [Proof tiers](references/proof-tiers.md) make that boundary explicit.
 
 ## Install
 
-Patchy is a `SKILL.md` bundle. Clone it into your agent's skills directory, then start a new chat.
+### Codex plugin
 
-### Codex on macOS or Linux
-
-```bash
-git clone https://github.com/Shivansh-Gaur2/patchy-mcpatchface.git ~/.codex/skills/patchy-mcpatchface
+```text
+codex plugin marketplace add Shivansh-Gaur2/patchy-mcpatchface --ref main
+codex plugin add patchy-mcpatchface@patchy-mcpatchface
 ```
 
-### Codex on Windows PowerShell
+Start a new Codex task after installation. Invoke the plugin skills with `@patchy`, `@patchy-rummage`, or `@patchy-clipboard`.
+
+### Portable skill bundle
+
+Clone the repository into a skill directory, then start a new chat.
 
 ```powershell
 git clone https://github.com/Shivansh-Gaur2/patchy-mcpatchface.git "$env:USERPROFILE\.codex\skills\patchy-mcpatchface"
 ```
 
-Compatible skill hosts can load the same folder from their own skills directory. Patchy stays opt-in so it can spend more context on the work that needs it.
+The root [SKILL.md](SKILL.md) is the portable entry point. [AGENTS.md](AGENTS.md) and [Copilot instructions](.github/copilot-instructions.md) are instruction-only fallbacks for hosts that read those files; they do not pretend to provide plugin commands or lifecycle hooks.
 
-## Benchmarks
+## Trust, not theatre
 
-Patchy has no benchmark or safety numbers yet. [The benchmark plan](benchmarks/README.md) describes the first comparison: fixed repository tasks, the same agent with and without Patchy, raw diffs and test output, and the cases where Patchy adds work without helping.
+Patchy has no performance or safety numbers yet. Its [benchmark suite](benchmarks/README.md) has named cases, a scorecard, and a method for comparing the same agent with and without Patchy. It will publish raw diffs, test output, failure cases, and counterexamples before it makes claims about speed, tokens, or correctness.
+
+Run the repository checks with:
+
+```text
+npm test
+```
+
+That verifies the marketplace catalog, generated plugin package, every shipped skill, and the fallback copies. GitHub Actions runs the same check on pushes and pull requests.
 
 ## Contributing
 
-[CONTRIBUTING.md](CONTRIBUTING.md) explains how to add a rule. The short version: a rule belongs here only when it changes a real engineering decision.
+[CONTRIBUTING.md](CONTRIBUTING.md) explains what belongs in Patchy. [CHANGELOG.md](CHANGELOG.md) records releases. The short version: a rule earns its place only when it changes a real engineering decision.
 
 ## Why the name?
 

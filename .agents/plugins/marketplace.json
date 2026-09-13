@@ -1,0 +1,20 @@
+{
+  "name": "patchy-mcpatchface",
+  "interface": {
+    "displayName": "Patchy McPatchface"
+  },
+  "plugins": [
+    {
+      "name": "patchy-mcpatchface",
+      "source": {
+        "source": "local",
+        "path": "./plugins/patchy-mcpatchface"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

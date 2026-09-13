@@ -1,0 +1,31 @@
+{
+  "name": "patchy-mcpatchface",
+  "version": "0.2.0",
+  "description": "A codebase raccoon that finds existing behavior and proves the patch belongs.",
+  "author": {
+    "name": "Shivansh Gaur",
+    "url": "https://github.com/Shivansh-Gaur2"
+  },
+  "homepage": "https://github.com/Shivansh-Gaur2/patchy-mcpatchface",
+  "repository": "https://github.com/Shivansh-Gaur2/patchy-mcpatchface",
+  "license": "MIT",
+  "keywords": ["agent-skills", "code-review", "code-reuse", "testing"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Patchy McPatchface",
+    "shortDescription": "Your codebase raccoon with receipts",
+    "longDescription": "Recover behavior, reuse the right owner, and report what the patch actually proves.",
+    "developerName": "Shivansh Gaur",
+    "category": "Productivity",
+    "capabilities": ["Skills"],
+    "websiteURL": "https://github.com/Shivansh-Gaur2/patchy-mcpatchface",
+    "brandColor": "#D97706",
+    "logo": "./assets/patchy-mascot.png",
+    "logoDark": "./assets/patchy-mascot.png",
+    "defaultPrompt": [
+      "Trace this behavior before changing it.",
+      "Find existing code I should reuse for this feature.",
+      "Audit this diff for missing business-rule proof."
+    ]
+  }
+}
