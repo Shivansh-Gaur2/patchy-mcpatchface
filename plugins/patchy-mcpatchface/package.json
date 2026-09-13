@@ -1,6 +1,6 @@
 {
   "name": "patchy-mcpatchface",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "private": true,
   "description": "A codebase-raccoon skill bundle for evidence-driven patches.",
   "type": "module",

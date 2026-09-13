@@ -1,6 +1,6 @@
 {
   "name": "patchy-mcpatchface",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A codebase raccoon that finds existing behavior and proves the patch belongs.",
   "author": {
     "name": "Shivansh Gaur",

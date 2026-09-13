@@ -70,11 +70,13 @@ Compilation and a passing happy-path test are evidence. They do not establish ev
 ### Codex plugin
 
 ```text
-codex plugin marketplace add Shivansh-Gaur2/patchy-mcpatchface --ref main
+codex plugin marketplace add Shivansh-Gaur2/patchy-mcpatchface --ref master
 codex plugin add patchy-mcpatchface@patchy-mcpatchface
 ```
 
 Start a new Codex task after installation. Invoke the plugin skills with `@patchy`, `@patchy-rummage`, or `@patchy-clipboard`.
+
+The marketplace is published from `master`. If you previously added an older source under the same marketplace name, remove it first with `codex plugin marketplace remove patchy-mcpatchface`, then run the two commands above.
 
 ### Portable skill bundle
 

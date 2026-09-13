@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.1 — 2026-09-13
+
+- Pointed Codex marketplace installation at the published `master` branch.
+- Bumped the plugin version so the corrected release can be refreshed cleanly.
+
 ## 0.2.0 — 2026-09-13
 
 - Added a repository marketplace catalog and generated plugin payload for reproducible Codex installation.
