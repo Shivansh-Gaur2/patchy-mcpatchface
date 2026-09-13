@@ -1,13 +1,18 @@
 {
   "name": "patchy-mcpatchface",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "private": true,
   "description": "A codebase-raccoon skill bundle for evidence-driven patches.",
   "type": "module",
   "scripts": {
     "build:marketplace": "node scripts/build-marketplace.mjs",
-    "check": "node scripts/check-packaging.mjs && node scripts/check-markdown-links.mjs && node scripts/check-toon-examples.mjs && node scripts/check-fallback-copies.mjs && node scripts/check-marketplace-package.mjs",
+    "benchmark:toon": "node scripts/benchmark-toon-tokens.mjs",
+    "check": "node scripts/check-packaging.mjs && node scripts/check-markdown-links.mjs && node scripts/check-toon-examples.mjs && node scripts/benchmark-toon-tokens.mjs && node scripts/check-fallback-copies.mjs && node scripts/check-marketplace-package.mjs",
     "test": "npm run check"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@dqbd/tiktoken": "^1.0.22",
+    "@toon-format/toon": "^4.1.1"
+  }
 }

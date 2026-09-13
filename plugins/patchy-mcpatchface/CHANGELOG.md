@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.2 — 2026-09-13
+
+- Replaced example-only TOON checks with official strict decoding and encoder round-trip validation.
+- Added a reproducible TOON, JSON, and Markdown token comparison for uniform Patchy receipts.
+
 ## 0.3.1 — 2026-09-13
 
 - Added repository health files, contributor templates, least-privilege CI permissions, Dependabot updates for GitHub Actions, and a maintainer checklist for GitHub settings.
