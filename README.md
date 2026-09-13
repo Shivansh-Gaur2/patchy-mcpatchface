@@ -6,7 +6,7 @@
 
 <p align="center">
   <em>Your codebase raccoon with a clipboard.</em><br>
-  Rummages first. Patches second. Asks for receipts.
+  Finds the old thing before building a new one.
 </p>
 
 <p align="center">
@@ -16,19 +16,17 @@
   <img src="https://img.shields.io/badge/license-MIT-1f2937?style=flat-square" alt="MIT license">
 </p>
 
----
+Small requests are where agents get oddly ambitious. A partial refund becomes a new service. A familiar rule gets copied into a handler. The test proves the happy case and nobody checks the payment state it skipped.
 
-You ask an agent for a small change. It creates a new helper, repeats a business rule hidden elsewhere, adds a happy-path test, and calls it done.
+Patchy reads the code and tests around the change first. It looks for the current owner of the behavior, checks what can be reused, and reports what the checks covered when the patch is finished.
 
-Patchy crawls through the repo first. It finds the existing service, traces the behavior that the change can affect, keeps the patch inside the story, and tells you what the checks actually established.
+## Before and after
 
-## Before / after
+Say you need partial refunds.
 
-You ask for partial refunds.
+An ordinary agent can add `PartialRefundService`, repeat the authorization check, touch a data model it did not need to touch, and test that one refund succeeds.
 
-Without Patchy, an agent may introduce `PartialRefundService`, duplicate authorization, change a data model it did not need to touch, and test only that a refund succeeds.
-
-With Patchy, the agent first looks for the refund owner, existing authorization policy, audit mechanism, and payment states. It turns the request into concrete obligations:
+Patchy starts by finding the refund owner, authorization policy, audit path, and payment states. That gives it a useful checklist:
 
 ```text
 Reuse: PaymentService.refund() and the existing authorization policy
@@ -44,27 +42,27 @@ Proof:
 - The final diff contains no parallel refund service.
 ```
 
-See [the full refund example](examples/refund-boundary.md) and [a business-logic walkthrough](examples/map-a-checkout-flow.md).
+[The full refund example](examples/refund-boundary.md) shows the investigation. [The checkout example](examples/map-a-checkout-flow.md) shows how Patchy explains a behavior path.
 
-## How Patchy works
+## How it works
 
-Patchy has three working modes:
+Patchy has three modes:
 
-| Mode | What Patchy does |
+| Mode | What it does |
 | --- | --- |
-| **Patch** | Builds or fixes a feature with a tight scope, reuse check, and proportionate verification. |
-| **Rummage** | Explains an unfamiliar behavior path without dumping the entire repository. |
-| **Clipboard** | Audits a diff for scope drift, duplicate logic, and unproven behavior. |
+| Patch | Builds or fixes a feature with a clear scope, a reuse check, and checks that fit the risk. |
+| Rummage | Explains an unfamiliar behavior path without making you read the whole repository. |
+| Clipboard | Reviews a diff for scope drift, repeated logic, and behavior that still lacks evidence. |
 
-For a non-trivial change, Patchy follows one loop:
+The usual loop is simple:
 
 ```text
-Rummage → find the real behavior and existing owner
-Patch    → make the smallest coherent change
-Clipboard → show what passed, what did not, and what remains uncertain
+Rummage → find the behavior and the code that owns it
+Patch    → make the smallest change that fits
+Clipboard → report what passed, what did not run, and what is still unknown
 ```
 
-It treats compilation and a happy-path test as useful evidence, not a complete proof of business correctness. The evidence levels are defined in [proof-tiers.md](references/proof-tiers.md).
+Compilation and a passing happy-path test are useful evidence. They do not establish every affected business rule. [proof-tiers.md](references/proof-tiers.md) describes the evidence Patchy reports.
 
 ## Use it
 
@@ -72,11 +70,11 @@ It treats compilation and a happy-path test as useful evidence, not a complete p
 $patchy-mcpatchface add partial refunds without changing the billing schema
 ```
 
-Use Patchy for feature work, bug fixes, unfamiliar codebases, focused code explanations, and audits of a meaningful diff. For a tiny local edit, it takes a lighter pass rather than performing a ceremony around a one-line change.
+Use Patchy for feature work, bug fixes, unfamiliar codebases, focused code explanations, and meaningful diff reviews. For a tiny local edit, it confirms the target and nearby reuse before making the change.
 
 ## Install
 
-Patchy is a portable `SKILL.md` bundle. Clone it into your agent's skills directory, then start a new chat.
+Patchy is a `SKILL.md` bundle. Clone it into your agent's skills directory, then start a new chat.
 
 ### Codex on macOS or Linux
 
@@ -90,19 +88,19 @@ git clone https://github.com/Shivansh-Gaur2/patchy-mcpatchface.git ~/.codex/skil
 git clone https://github.com/Shivansh-Gaur2/patchy-mcpatchface.git "$env:USERPROFILE\.codex\skills\patchy-mcpatchface"
 ```
 
-Other skill-capable agents can use the same repository by placing it in their skills directory. Patchy deliberately ships as a skill, not an always-on hook: it should spend deep context only when the task merits it.
+Compatible skill hosts can load the same folder from their own skills directory. Patchy stays opt-in so it can spend more context on the work that needs it.
 
 ## Benchmarks
 
-Patchy makes no performance or safety claims yet. The benchmark plan is public in [benchmarks/README.md](benchmarks/README.md): compare a fixed set of repository tasks with and without Patchy, score both behavioral correctness and engineering quality, and publish the raw outputs and limitations.
+Patchy has no benchmark or safety numbers yet. [The benchmark plan](benchmarks/README.md) describes the first comparison: fixed repository tasks, the same agent with and without Patchy, raw diffs and test output, and the cases where Patchy adds work without helping.
 
 ## Contributing
 
-Read [CONTRIBUTING.md](CONTRIBUTING.md) before adding a rule. Every new instruction must change an observed decision; a longer prompt is not automatically a better skill.
+[CONTRIBUTING.md](CONTRIBUTING.md) explains how to add a rule. The short version: a rule belongs here only when it changes a real engineering decision.
 
 ## Why the name?
 
-Because Patchy is the coworker who appears from under a pile of old code holding the exact helper you were about to rewrite, a clipboard full of edge cases, and an unreasonable amount of confidence about where the business rule lives.
+Patchy is the coworker who crawls out from under a pile of old code carrying the helper you were about to rewrite. The clipboard has the edge cases you forgot to ask about.
 
 ## License
 
