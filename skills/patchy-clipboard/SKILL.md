@@ -15,4 +15,4 @@ Audit four questions:
 3. **Behavior**: Which invariants and rejection paths can change? Trace them far enough to name the owner and evidence.
 4. **Proof**: Which checks ran, what do they establish, and which changed scenarios remain unverified?
 
-Report findings by severity only when they are concrete. Each finding needs the affected behavior, evidence, impact, and the smallest corrective direction. Finish with a receipt: scope assessed, reuse reviewed, proof available, and residual risk. Say plainly when no material finding is supported.
+Report findings by severity only when they are concrete. Each finding needs the affected behavior, evidence, impact, and the smallest corrective direction. Finish with a receipt: scope assessed, reuse reviewed, proof available, and residual risk. Use TOON only for three or more same-shaped evidence rows; [the compact-receipt reference](../../references/toon-receipts.md) defines the boundary. Say plainly when no material finding is supported.

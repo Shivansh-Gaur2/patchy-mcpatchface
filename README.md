@@ -18,7 +18,7 @@
 
 Small requests are where agents get oddly ambitious. A partial refund becomes a new service. A familiar rule gets copied into a handler. The test proves one refund succeeds and nobody checks the payment state it skipped.
 
-Patchy reads the path around the change first. It finds the current owner of a behavior, looks for code worth reusing, turns the relevant rules into proof obligations, and says what the final checks did and did not establish.
+Patchy starts with the path around the change. It finds the current owner of a behavior, looks for code worth reusing, turns the relevant rules into proof obligations, and states what the final checks did and did not establish.
 
 ## Before and after
 
@@ -44,9 +44,9 @@ Proof:
 
 [The full refund example](examples/refund-boundary.md) shows the investigation. [The checkout example](examples/map-a-checkout-flow.md) shows how Patchy explains a behavior path.
 
-## What you get
+## How it works
 
-Patchy ships a real Codex marketplace, a plugin bundle, a portable `SKILL.md`, and lightweight instruction fallbacks. The repository root is the source of truth; the marketplace payload is generated from it and validation catches drift.
+The repository includes a Codex marketplace, a plugin bundle, a portable `SKILL.md`, and instruction fallbacks. The root content is the source of truth. The marketplace payload is generated from it, and the checks catch drift.
 
 | Entry point | Use it for |
 | --- | --- |
@@ -55,7 +55,7 @@ Patchy ships a real Codex marketplace, a plugin bundle, a portable `SKILL.md`, a
 | `patchy-clipboard` | An existing diff that needs a scope, reuse, and proof audit. |
 | `patchy-help` | A quick reminder of the entry points. |
 
-The loop is deliberately simple:
+The working loop is simple:
 
 ```text
 Rummage → find the behavior and the code that owns it
@@ -64,6 +64,12 @@ Clipboard → report what passed, what did not run, and what is still unknown
 ```
 
 Compilation and a passing happy-path test are evidence. They do not establish every business rule that a change can reach. [Proof tiers](references/proof-tiers.md) make that boundary explicit.
+
+## Compact context, not a repository dump
+
+Patchy spends context in stages. It begins with repository guidance, the request, the likely owner, and the closest tests. It widens the search only when a missing caller, decision, boundary, or invariant could change the patch or its proof.
+
+For repeated records such as callers, reuse candidates, and verification results, Patchy can use [TOON](references/toon-receipts.md): a compact, row-oriented format that keeps like-shaped evidence together. Explanations remain plain language. Tool payloads, configuration, APIs, and irregular nested data keep their native format. This is a context-saving technique, not a universal promise that every task or model uses fewer tokens.
 
 ## Install
 
@@ -88,9 +94,9 @@ git clone https://github.com/Shivansh-Gaur2/patchy-mcpatchface.git "$env:USERPRO
 
 The root [SKILL.md](SKILL.md) is the portable entry point. [AGENTS.md](AGENTS.md) and [Copilot instructions](.github/copilot-instructions.md) are instruction-only fallbacks for hosts that read those files; they do not pretend to provide plugin commands or lifecycle hooks.
 
-## Trust, not theatre
+## Benchmarks
 
-Patchy has no performance or safety numbers yet. Its [benchmark suite](benchmarks/README.md) has named cases, a scorecard, and a method for comparing the same agent with and without Patchy. It will publish raw diffs, test output, failure cases, and counterexamples before it makes claims about speed, tokens, or correctness.
+Patchy has no performance or safety numbers yet. Its [benchmark suite](benchmarks/README.md) has named cases, a scorecard, and a method for comparing the same agent with and without Patchy. It will publish raw diffs, test output, failure cases, and counterexamples before making claims about speed, tokens, or correctness.
 
 Run the repository checks with:
 
@@ -102,7 +108,7 @@ That verifies the marketplace catalog, generated plugin package, every shipped s
 
 ## Contributing
 
-[CONTRIBUTING.md](CONTRIBUTING.md) explains what belongs in Patchy. [CHANGELOG.md](CHANGELOG.md) records releases. The short version: a rule earns its place only when it changes a real engineering decision.
+[CONTRIBUTING.md](CONTRIBUTING.md) explains what belongs in Patchy. [CHANGELOG.md](CHANGELOG.md) records releases. A rule earns its place only when it changes a real engineering decision.
 
 ## Why the name?
 

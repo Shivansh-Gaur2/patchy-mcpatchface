@@ -1,7 +1,7 @@
 {
   "name": "patchy-mcpatchface",
-  "version": "0.2.1",
-  "description": "A codebase raccoon that finds existing behavior and proves the patch belongs.",
+  "version": "0.3.0",
+  "description": "A codebase raccoon that retrieves the relevant path, reuses its owner, and proves the patch belongs.",
   "author": {
     "name": "Shivansh Gaur",
     "url": "https://github.com/Shivansh-Gaur2"
@@ -13,8 +13,8 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Patchy McPatchface",
-    "shortDescription": "Your codebase raccoon with receipts",
-    "longDescription": "Recover behavior, reuse the right owner, and report what the patch actually proves.",
+    "shortDescription": "Your codebase raccoon with compact receipts",
+    "longDescription": "Recover the relevant behavior, reuse the right owner, and report what the patch actually proves.",
     "developerName": "Shivansh Gaur",
     "category": "Productivity",
     "capabilities": ["Skills"],

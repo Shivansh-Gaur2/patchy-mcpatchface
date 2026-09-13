@@ -27,6 +27,19 @@ Read repository guidance, the relevant entry point, nearby tests, and the comman
 
 The card is ready when the likely behavior path, owner of each relevant rule, likely touched files, and proof obligations are named. Ask only when the missing answer changes the implementation; otherwise make the smallest reversible assumption and record it.
 
+## Spend context in stages
+
+Do not load the whole repository to answer a scoped request. Start with the task, repository guidance, the nearest entry point, its owner, and adjacent tests. Search by symbols and domain language. Widen only when an unresolved caller, branch, boundary, or invariant could change one of these decisions:
+
+- the owner that should change;
+- code that should be reused or extended;
+- a protected boundary or explicit exclusion;
+- a scenario the proof must cover.
+
+Keep compact evidence with a locator and a label: **Observed**, **Inferred**, or **Unknown**. Do not turn search output into a speculative codebase summary. If the request is an explanation, answer the narrow question first and offer further tracing only when it would materially help.
+
+Use [compact receipts](../../references/toon-receipts.md) for three or more same-shaped evidence records. Use prose or a short Markdown list for a one-off fact, a decision, or any irregular structure. Never replace configuration, API payloads, source code, or required JSON with TOON.
+
 ## Rummage before designing
 
 Trace the changed path from entry point through decisions, state changes, persistence, external calls, and returned errors. Use code, tests, configuration, and call sites as evidence. Keep three labels distinct:
@@ -36,6 +49,12 @@ Trace the changed path from entry point through decisions, state changes, persis
 - **Unknown**: not established yet.
 
 For business logic, identify the decision table: inputs, branches, side effects, rejection paths, authorization, timing, retries, idempotency, and failure behavior. Follow only the branches relevant to the request, then widen when the changed boundary makes another branch reachable.
+
+## Challenge the obvious design when it matters
+
+Start with the repository's existing seam. When the request has a material design choice, compare that approach with one credible alternative: a smaller extension, a different existing owner, or a new boundary. Judge them by ownership, behavior risk, migration cost, testability, and long-term duplication. Choose one and record the reason.
+
+Do not manufacture novelty for a local change. Raise an optional better direction only when the evidence shows that the requested approach would duplicate a decision, deepen a fragile boundary, or leave a recurring problem unsolved. Keep optional work out of the implementation unless the user expands scope.
 
 ## Pass the reuse gate
 
@@ -62,7 +81,7 @@ Verify in proportion to risk:
 5. Exercise changed module, persistence, queue, provider, or API boundaries with the smallest available integration or contract check.
 6. Review the final diff and search again for duplicate logic, accidental files, weakened errors, and scope drift.
 
-Read [proof tiers](../../references/proof-tiers.md) when the confidence level needs to be explicit.
+Read [proof tiers](../../references/proof-tiers.md) when the confidence level needs to be explicit. When a new behavior has no existing test, derive scenarios from its decision contract, add the closest focused seam available, and state the remaining gap. TDD is useful only when the test expresses the behavior that now exists; a green unrelated suite is not proof.
 
 ## Leave receipts
 
@@ -75,5 +94,7 @@ End with:
 - **Unverified**: checks that could not run and why.
 - **Residual risk**: remaining business or integration uncertainty.
 - **Follow-ups**: evidence-backed work that stayed out of scope.
+
+Keep the receipt human-readable. Use a TOON block for repeated impact, reuse, or verification rows only when it makes the evidence shorter and easier to scan. State the conclusion in plain language.
 
 Compilation and a happy-path test are evidence, not a claim that every affected rule is safe.

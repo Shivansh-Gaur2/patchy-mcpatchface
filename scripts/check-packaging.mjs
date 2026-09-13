@@ -14,6 +14,7 @@ const required = [
   "skills/patchy-clipboard/SKILL.md",
   "skills/patchy-help/SKILL.md",
   "references/proof-tiers.md",
+  "references/toon-receipts.md",
   "rules/patchy-fallback.md",
   "benchmarks/cases/README.md",
 ];

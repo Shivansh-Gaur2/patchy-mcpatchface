@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 Inspect; do not edit unless the user separately asks for a change. Start from the question's entry point and trace only the path needed to answer it.
 
-Return a compact map first:
+Return the smallest useful map first:
 
 - entry point and caller;
 - main decisions and their owners;
@@ -18,4 +18,4 @@ Return a compact map first:
 
 Then explain the requested path in order with file and symbol references. Mark each statement as **Observed**, **Inferred**, or **Unknown**. Identify the decision table only where it changes the answer: inputs, branches, authorization, state transitions, retries, and errors.
 
-Do not turn a focused question into a repository tour. If finding exposes a risk or cleanup opportunity, list it separately with its evidence; do not repair it.
+For three or more similar map rows, use the compact TOON receipt defined in [the reference](../../references/toon-receipts.md). Keep the explanation in ordinary language and retain source locators. Do not turn a focused question into a repository tour. If finding exposes a risk or cleanup opportunity, list it separately with its evidence; do not repair it.
