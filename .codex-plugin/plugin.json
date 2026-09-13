@@ -1,6 +1,6 @@
 {
   "name": "patchy-mcpatchface",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "A codebase raccoon that retrieves the relevant path, reuses its owner, and proves the patch belongs.",
   "author": {
     "name": "Shivansh Gaur",
