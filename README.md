@@ -11,6 +11,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/Codex-plugin%20ready-D97706?style=flat-square" alt="Codex plugin ready">
+  <a href="https://github.com/Shivansh-Gaur2/patchy-mcpatchface/actions/workflows/validate.yml"><img src="https://github.com/Shivansh-Gaur2/patchy-mcpatchface/actions/workflows/validate.yml/badge.svg?branch=master" alt="Validation status"></a>
   <img src="https://img.shields.io/badge/skills-4-1f2937?style=flat-square" alt="Four focused skills">
   <img src="https://img.shields.io/badge/proof-behavior%20first-0F766E?style=flat-square" alt="Behavior first proof">
   <img src="https://img.shields.io/badge/license-MIT-1f2937?style=flat-square" alt="MIT license">
@@ -123,6 +124,16 @@ git clone https://github.com/Shivansh-Gaur2/patchy-mcpatchface.git "$env:USERPRO
 ```
 
 The root [SKILL.md](SKILL.md) is the portable entry point. [AGENTS.md](AGENTS.md) and [Copilot instructions](.github/copilot-instructions.md) are instruction-only fallbacks for hosts that read those files; they do not pretend to provide plugin commands or lifecycle hooks.
+
+### Other supported coding agents
+
+Patchy is also discoverable through [`skills.sh`](https://github.com/isiahhill/skills.sh). This public command was verified against this repository:
+
+```text
+npx skills add Shivansh-Gaur2/patchy-mcpatchface --skill patchy-mcpatchface --agent codex
+```
+
+Replace `codex` with another agent supported by `skills.sh` when needed. Start a new agent session after installation.
 
 ## Evidence
 
