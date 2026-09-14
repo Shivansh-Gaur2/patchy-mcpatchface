@@ -2,7 +2,7 @@
 name: Community benchmark report
 about: Share a reproducible control-versus-Patchy trial on a real repository.
 title: "benchmark: "
-labels: ""
+labels: "community trial"
 assignees: ""
 ---
 
