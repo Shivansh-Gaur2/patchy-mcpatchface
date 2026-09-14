@@ -16,9 +16,17 @@
   <img src="https://img.shields.io/badge/license-MIT-1f2937?style=flat-square" alt="MIT license">
 </p>
 
-Patchy is a senior-engineer raccoon for the moments when “just make the change” is not enough. It protects the constraints you name, finds behavior that already owns the decision, compares a better direction when the design is material, and tells you what the proof actually covers.
+I built Patchy because I got tired of typing the same five sentences into every coding agent.
 
-It is built for the uncomfortable parts of agentic coding: the file that must not change, the policy hidden behind a second caller, the existing helper an agent might duplicate, the new behavior with no test seam, and the business-logic walkthrough that should answer one question without narrating the entire repository.
+"Don't touch that file." "We already have a service for this, go find it." "Please follow the patterns the repo already uses." "Don't rewrite half the module for a two-line fix." "Are you sure nothing else depends on this?"
+
+Every single time. So I turned those sentences into a skill and gave it a face.
+
+Patchy is a raccoon with a clipboard. It rummages through your codebase before it writes anything, finds the thing that already owns the decision, and reuses it instead of quietly adding a parallel copy next to it. It keeps to the design patterns and boundaries your repo already committed to, picks the smallest change that actually fits, and then tells you plainly what the proof covers and what it doesn't. No heroic refactors you didn't ask for. Nothing that looks clever in the diff and breaks on Monday.
+
+It also speaks [TOON](references/toon-receipts.md) for the repetitive evidence bits (callers, reuse candidates, test results) so you burn fewer tokens on rows that all look the same. Prose stays prose. Tool payloads stay untouched.
+
+And yes. It is a raccoon. That part is non-negotiable.
 
 ## The problems Patchy is built to handle
 
@@ -31,15 +39,15 @@ It is built for the uncomfortable parts of agentic coding: the file that must no
 | “There is no relevant test yet.” | Find the nearest characterization, contract, integration, or acceptance seam; otherwise name the missing proof rather than treating a green unrelated suite as safety. |
 | “Explain this without a repository dump.” | Answer first, distinguish observed facts from inference and unknowns, and stop tracing when more context cannot change the answer. |
 
-Patchy does not promise omniscience. It cannot prove every unknown business rule or replace a maintainer’s domain knowledge. Its job is to make the investigation proportional, make a gap visible, and keep a useful better direction separate from unauthorized scope expansion.
+Patchy is not magic. It can't prove every business rule in your head, and it won't replace someone who has lived in the codebase for three years. What it does is keep the digging proportional to the task, say out loud when there's a gap, and keep "here's a better direction" separate from "I went and did it anyway."
 
 ## Before and after
 
-Say you need partial refunds.
+Say you ask for partial refunds.
 
-An ordinary agent can add `PartialRefundService`, repeat the authorization check, touch a data model it did not need to touch, and test one happy path.
+A normal agent happily spins up a shiny new `PartialRefundService`, copy-pastes the authorization check, pokes a data model it had no business touching, and ships one happy-path test.
 
-Patchy finds the refund owner, authorization policy, audit path, and payment states. That gives it a useful contract:
+Patchy goes looking first. It finds the refund owner, the authorization policy, the audit path, and the payment states. Then you get an actual contract:
 
 ```text
 Reuse: PaymentService.refund() and the existing authorization policy
@@ -77,9 +85,9 @@ Patch       → make the smallest cohesive change that fits
 Clipboard   → report what passed, what did not run, and what is still unknown
 ```
 
-Patchy introduces an alternative only when evidence shows the requested route would duplicate a decision, deepen a fragile boundary, or leave a recurring problem unsolved. The required patch stays separate from that optional direction unless you expand the scope.
+Patchy only brings up an alternative design when the evidence says the route you asked for would duplicate a decision, harden a boundary that's already shaky, or leave the same bug waiting to happen again. The patch you asked for stays separate from that suggestion unless you say go.
 
-Compilation and a passing happy-path test are evidence. They do not establish every business rule that a change can reach. [Proof tiers](references/proof-tiers.md) make that boundary explicit.
+One thing I'm stubborn about: compiling and a green happy-path test are evidence, not proof. They don't cover every business rule a change can reach. [Proof tiers](references/proof-tiers.md) spells that out.
 
 ## Compact context, not a repository dump
 
@@ -118,7 +126,7 @@ The root [SKILL.md](SKILL.md) is the portable entry point. [AGENTS.md](AGENTS.md
 
 ## Evidence
 
-The current release has executable repository evidence, but not yet comparative agent benchmarks. The `0.3.2` release validates the package, local documentation links, strict TOON receipts, token fixture, fallback instructions, and generated marketplace copy:
+The current `0.4.0` release has executable repository evidence, but not yet comparative agent benchmarks. It validates the package, local documentation links, strict TOON receipts, token fixture, fallback instructions, and generated marketplace copy:
 
 ```text
 plugin package is coherent
@@ -135,6 +143,8 @@ These checks prove the shipped package and its references agree; they do not pro
 
 Patchy has no performance or safety numbers yet. Its [benchmark suite](benchmarks/README.md) has named cases, a scorecard, and a method for comparing the same agent with and without Patchy. The [results ledger](benchmarks/RESULTS.md) defines the required artifacts and the decision rule for whether the skill earns its context cost. It will publish raw diffs, test output, failure cases, and counterexamples before making claims about speed, tokens, or correctness.
 
+Want to help establish the evidence? Run the [community trial guide](docs/community-trial.md) on a safe real task, then submit a reproducible benchmark report. Neutral and negative results are welcome.
+
 For repeated, uniform evidence records, the [TOON comparison](benchmarks/toon-token-comparison.md) measures a 27.6% reduction against compact JSON and 4.1% against a concise Markdown table with a pinned `o200k_base` tokenizer. This is a format-level result for that fixture, not a claim that every task or Codex model uses fewer tokens.
 
 Run the repository checks with:
@@ -147,11 +157,17 @@ That verifies the marketplace catalog, generated plugin package, every shipped s
 
 ## Contributing
 
-[CONTRIBUTING.md](CONTRIBUTING.md) explains what belongs in Patchy. [CHANGELOG.md](CHANGELOG.md) records releases, and the [maintainer checklist](docs/maintainer-checklist.md) covers the GitHub settings and release controls that cannot be enforced by repository files. A rule earns its place only when it changes a real engineering decision.
+Honestly, this is the part I care about most. Please try it on a real repo and tell me where it annoyed you.
+
+If Patchy over-explained, missed an obvious existing helper, widened scope when it shouldn't have, or wrote a receipt that wasn't useful, open an issue with the case. A failing case is more valuable to me than a star. PRs very welcome too, especially new benchmark cases, sharper wording in a skill, or a fallback that works better on a host I haven't tried.
+
+[CONTRIBUTING.md](CONTRIBUTING.md) explains what belongs in Patchy. [CHANGELOG.md](CHANGELOG.md) records releases, and the [maintainer checklist](docs/maintainer-checklist.md) covers the GitHub settings and release controls that repository files can't enforce. One rule of thumb: a rule earns its place only when it changes a real engineering decision.
 
 ## Why the name?
 
-Patchy is the coworker who crawls out from under a pile of old code carrying the helper you were about to rewrite. The clipboard has the edge cases you forgot to ask about.
+Patchy is that coworker who crawls out from under a pile of old code holding the exact helper you were about to rewrite from scratch. The clipboard has the edge cases you forgot to ask about.
+
+Also raccoons go through other people's trash for a living. Felt appropriate.
 
 ## License
 

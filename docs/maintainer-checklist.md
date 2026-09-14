@@ -4,11 +4,19 @@ These controls are configured in GitHub, so they cannot be verified or enabled b
 
 ## Before the next release
 
-- Choose one release branch. The local evidence currently places the validated `0.3.0` line on `master`; either make it the default branch or merge it into `main` and update installation instructions to use that one branch.
+- Keep `master` as the protected default and release branch, or deliberately migrate the marketplace and installation instructions together before changing it.
 - Protect the release branch: require pull requests, require the `Validate` check, require up-to-date branches, and prevent force pushes and branch deletion.
 - Enable private vulnerability reporting so the path described in [SECURITY.md](../SECURITY.md) is available.
 - Enable Dependabot alerts and review the weekly GitHub Actions update pull requests created from `.github/dependabot.yml`.
 - Confirm the repository's Actions policy permits only the reviewed actions used by the validation workflow.
+
+## Community launch
+
+- Enable GitHub Discussions with **Announcements**, **General**, and **Ideas** categories.
+- Pin an announcement that links to the [community trial guide](community-trial.md) and requests reproducible control-versus-Patchy results.
+- Add a social preview image and a repository homepage when a stable landing page exists.
+- Share one evidence-backed case study at a time; answer questions and publish negative results as well as wins.
+- Review GitHub Traffic weekly for visitors, clones, referring sites, and popular content; track trial reports separately.
 
 ## For each release
 
