@@ -16,3 +16,7 @@ Patchy is useful only when it changes a real engineering decision. Before adding
 2. Confirm every referenced file exists.
 3. Remove scaffolding, stale claims, and duplicate rules.
 4. Add or update a benchmark case when the behavior changes materially.
+
+## Share a real-world trial
+
+You do not need to change Patchy's code to help. Follow the [community trial guide](docs/community-trial.md), then open a benchmark report with the paired-run artifacts. Neutral and negative outcomes are useful evidence too.

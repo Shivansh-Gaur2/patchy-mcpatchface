@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.5.0 — 2026-10-11
+
+- Added Patchy Factory's mapper, designer, builder, and reviewer skills, with run records, bounded repairs, candidate-bound checks, and Fast/Deep review lanes.
+- Added a canonical `patchy-review` skill with separate contract-behavior and implementation-fit findings; kept `patchy-clipboard` as a compatibility entry point.
+- Adapted selected minimal-change and behavior-sized testing practices into Patchy, with upstream attribution and no claim of measured quality or productivity gains.
+- Let Factory Fast use one reviewer for both review axes and Deep use independent reviewers when the task justifies the additional context.
+
+## 0.4.0 — 2026-09-13
+
+- Reframed Patchy as a senior-engineer workflow: hard constraints, evidence-backed architecture judgment, bounded codebase learning, and explicit proof gaps.
+- Added a benchmark contract for protected boundaries and design decisions that could otherwise create duplicate abstractions.
+
 ## 0.3.2 — 2026-09-13
 
 - Replaced example-only TOON checks with official strict decoding and encoder round-trip validation.
