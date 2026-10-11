@@ -2,6 +2,10 @@
 
 These controls are configured in GitHub, so they cannot be verified or enabled by the repository files alone.
 
+## Last verified repository state
+
+On 2026-10-11, GitHub reported `master` as the default branch and marked it protected, with the `package` status check required. The repository rulesets endpoint returned no rulesets. The GitHub integration could not read the full classic branch-protection configuration, so verify the remaining settings below directly in GitHub before changing them.
+
 ## Before the next release
 
 - Keep `master` as the protected default and release branch, or deliberately migrate the marketplace and installation instructions together before changing it.
