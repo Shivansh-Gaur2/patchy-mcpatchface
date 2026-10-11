@@ -116,7 +116,7 @@ codex plugin add patchy-mcpatchface@patchy-mcpatchface
 
 Start a new Codex task after installation. Invoke the plugin skills with `@patchy`, `@patchy-rummage`, `@patchy-review`, or `@patchy-factory`. Existing `@patchy-clipboard` invocations continue to work as a compatibility entry point.
 
-The marketplace is published from `master`. In this checkout, the validated release line is on `master`, while the cached `origin/main` ref points to the older portable-skill history. If GitHub shows an older version, confirm the public branch state, then either make `master` the repository's default branch or merge the release line into `main` and publish from `main` consistently. After changing the source, remove the cached marketplace entry and reinstall:
+The marketplace is published from `master`. If an installed plugin looks stale after a repository update, remove the cached marketplace entry and reinstall it from the current release branch:
 
 ```text
 codex plugin marketplace remove patchy-mcpatchface
@@ -146,7 +146,7 @@ Replace `codex` with another agent supported by `skills.sh` when needed. Start a
 
 ## Evidence
 
-The current `0.4.0` release has executable repository evidence, but not yet comparative agent benchmarks. It validates the package, local documentation links, strict TOON receipts, token fixture, fallback instructions, and generated marketplace copy:
+The `0.5.0` release has executable repository evidence, but not yet comparative agent benchmarks. It validates the package, local documentation links, strict TOON receipts, token fixture, fallback instructions, and generated marketplace copy:
 
 ```text
 plugin package is coherent
