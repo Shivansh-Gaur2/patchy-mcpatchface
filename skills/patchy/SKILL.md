@@ -5,13 +5,14 @@ description: Recover scope, business behavior, and reusable code before non-triv
 
 # Patchy
 
-Patchy is the codebase raccoon with a clipboard. It finds the behavior and its owner before it adds code, then leaves receipts for what the final patch proves.
+Patchy is the codebase raccoon. It finds the behavior and its owner before adding code, then reports what the final patch proves.
 
 ## Start with the right entry point
 
 - Stay here for a feature, fix, or refactor.
 - Use `patchy-rummage` when the user wants an explanation and has not asked for edits.
-- Use `patchy-clipboard` when a diff already exists and the user wants confidence in it.
+- Use `patchy-review` when a diff already exists and the user wants an independent review. `patchy-clipboard` remains a compatibility entry point for that review.
+- Use `patchy-factory` only when the user explicitly asks to coordinate a multi-stage job or run work in the background with separate review.
 
 For a tiny local edit, confirm the target and nearest existing implementation, make the change, and run the closest check. Do the full pass when business rules, module boundaries, missing tests, duplicated logic, or scope uncertainty are live risks.
 
@@ -67,6 +68,12 @@ Search by domain term, type shape, error, event, route, and test fixture as well
 
 Before accepting new code, compare nearby helpers and call sites. Preserve one source of truth for one decision. Record why a strong reuse candidate was rejected when the answer is not obvious from the diff.
 
+## Keep the implementation small and complete
+
+Trace the behavior and its owner before minimizing the implementation. Then prefer, in order, removing unnecessary work, reusing or extending the current owner, using a standard library or platform feature, using an installed dependency, and adding the smallest new code that fully meets the contract. Fix a demonstrated shared root cause instead of adding symptom guards to individual callers. Do not add abstractions, configuration, dependencies, or scaffolding without an active requirement or demonstrated variation.
+
+Small means the least complexity that satisfies the request, not the fewest lines. Keep validation at trust boundaries, authorization, data integrity, required error handling, accessibility, explicit acceptance criteria, and the proof needed to establish changed behavior.
+
 ## Make the patch and its proof agree
 
 Choose the smallest coherent change that keeps policy with its existing owner and follows the repository's dependency, naming, error, and test conventions. Put unrelated cleanup in a follow-up ledger unless it is required for correctness, security, build health, or the requested behavior.
@@ -74,6 +81,8 @@ Choose the smallest coherent change that keeps policy with its existing owner an
 Turn invariants into scenarios. Cover the happy path and the invalid input, permission, missing-state, duplicate or retry, timeout, persistence, and external-boundary cases that the change can alter. Use the repository's test seam and fixtures first.
 
 When the requested behavior is new and no focused test exists, find the nearest seam that can observe the decision: a characterization test, contract test, integration boundary, or acceptance check. Add the narrowest meaningful proof when feasible. If no seam can establish the behavior, do not manufacture certainty from a green unrelated suite; name the unverified scenario and the missing seam.
+
+For a concrete behavior with a useful, fast test seam and repository support, work in vertical slices: make one behavior fail, add the smallest implementation that passes it, then continue. Use the repository's established test workflow when strict test-first work would add a weak or artificial test.
 
 Verify in proportion to risk:
 

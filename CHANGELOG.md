@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- Added a canonical `patchy-review` skill with separate contract-behavior and implementation-fit findings; kept `patchy-clipboard` as a compatibility entry point.
+- Adapted selected minimal-change and behavior-sized testing practices into Patchy, with upstream attribution and no claim of measured quality or productivity gains.
+- Let Factory Fast use one reviewer for both review axes and Deep use independent reviewers when the task justifies the additional context.
+
 ## 0.4.0 — 2026-09-13
 
 - Reframed Patchy as a senior-engineer workflow: hard constraints, evidence-backed architecture judgment, bounded codebase learning, and explicit proof gaps.
