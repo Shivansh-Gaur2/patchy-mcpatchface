@@ -76,6 +76,13 @@ For example, if you ask for partial refunds, Patchy should look for the current 
 
 The amount of investigation should fit the task. A tiny local edit can use the nearest implementation and its closest check; a change involving shared business rules deserves a wider trace.
 
+### Watch a Patchy walkthrough
+
+[![17-second partial-refund walkthrough](assets/patchy-refund-demo.gif)](assets/patchy-refund-demo.gif)
+
+This illustrative walkthrough follows the repository's [partial-refund example](examples/refund-boundary.md): define the boundary, trace the current owner, prefer reuse, make a focused change, and name the acceptance checks. It is a workflow visualization, not a recording of a live agent run; the checks shown are not claimed as test results.
+
+
 ### What is installed today
 
 Patchy supplies the engineering instructions. The coding-agent host supplies the model, repository tools, and execution environment. The skills guide the agent in using those tools; they do not run a separate service or create sandbox boundaries themselves.
