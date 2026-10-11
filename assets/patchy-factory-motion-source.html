@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Patchy Factory — motion graphic</title>
+  <style>
+    :root { color-scheme: dark; font-family: "Segoe UI", sans-serif; }
+    body { margin: 0; background: #111b24; color: #f8f4eb; display: grid; place-items: center; min-height: 100vh; }
+    main { width: min(1280px, calc(100vw - 32px)); padding: 18px 0; }
+    canvas { width: 100%; aspect-ratio: 16/9; display: block; border-radius: 18px; box-shadow: 0 24px 70px #0007; }
+    nav { display: flex; align-items: center; gap: 12px; padding-top: 14px; font-size: 13px; color: #cdd8dc; }
+    button { border: 1px solid #ffba82; border-radius: 999px; padding: 9px 16px; color: #14212b; background: #ffc18f; font-weight: 700; cursor: pointer; }
+    button:hover { background: #ffd7b4; }
+  </style>
+</head>
+<body>
+<main>
+  <canvas id="film" width="1280" height="720" aria-label="Animated walkthrough of Patchy Factory's Deep lane"></canvas>
+  <nav><button id="replay">Replay</button><button id="export">Watch MP4</button><span>Factory Deep lane · illustrative workflow · 21 seconds</span></nav>
+</main>
+<script>
+const canvas = document.querySelector("#film");
+const c = canvas.getContext("2d");
+const mascot = new Image();
+mascot.src = "./patchy-mascot.png";
+const W = 1280, H = 720, DURATION = 21;
+const C = {
+  paper: "#F8F4EC", paper2: "#F1EDE6", ink: "#172934", muted: "#546776",
+  orange: "#F47737", orangeSoft: "#FFE0CA", aqua: "#58D5C7",
+  aquaSoft: "#DCF7F2", lilac: "#A58ADE", lilacSoft: "#EEE7FD",
+  yellow: "#F5CC65", cream: "#FFF9EF", line: "#D6DED9", white: "#FFFFFF"
+};
+const clamp = (x) => Math.max(0, Math.min(1, x));
+const ease = (x) => { x = clamp(x); return x * x * (3 - 2 * x); };
+const show = (t, a, b) => ease((t-a)/0.48) * (1-ease((t-(b-0.48))/0.48));
+const enter = (t, a, span=0.75) => ease((t-a)/span);
+const lerp = (a,b,t) => a+(b-a)*t;
+function text(s,x,y,size=28,color=C.ink,weight=600,align="left") {
+  c.save(); c.fillStyle=color; c.font=`${weight} ${size}px Bahnschrift, 'Segoe UI', sans-serif`; c.textAlign=align;
+  c.fillText(s,x,y); c.restore();
+}
+function rect(x,y,w,h,r,fill,stroke=null,line=1,shadow=0) {
+  c.save(); if (shadow) { c.shadowColor="#17313B30"; c.shadowBlur=shadow; c.shadowOffsetY=9; }
+  c.beginPath(); c.roundRect(x,y,w,h,r); c.fillStyle=fill; c.fill();
+  if (stroke) { c.strokeStyle=stroke; c.lineWidth=line; c.stroke(); } c.restore();
+}
+function circle(x,y,r,fill) { c.beginPath(); c.arc(x,y,r,0,Math.PI*2); c.fillStyle=fill; c.fill(); }
+function line(x1,y1,x2,y2,color,width=3,dash=[]) {
+  c.save(); c.strokeStyle=color; c.lineWidth=width; c.lineCap="round"; c.setLineDash(dash); c.beginPath();
+  c.moveTo(x1,y1); c.lineTo(x2,y2); c.stroke(); c.restore();
+}
+function chip(label,x,y,color,background,w=0) {
+  c.font="700 18px Bahnschrift, 'Segoe UI', sans-serif";
+  const width=w||c.measureText(label).width+34;
+  rect(x,y,width,36,18,background);
+  text(label,x+17,y+24,18,color,700);
+  return width;
+}
+function movingDot(x1,y1,x2,y2,p,color,size=9) {
+  const u=ease(p); circle(lerp(x1,x2,u),lerp(y1,y2,u),size,color);
+  circle(lerp(x1,x2,u),lerp(y1,y2,u),size+8,color+"33");
+}
+function grid(t,dark=false) {
+  const g=c.createLinearGradient(0,0,W,H);
+  if (dark) { g.addColorStop(0,"#122531"); g.addColorStop(1,"#0B1720"); }
+  else { g.addColorStop(0,C.paper); g.addColorStop(1,"#EAF0EC"); }
+  c.fillStyle=g; c.fillRect(0,0,W,H);
+  c.save(); c.globalAlpha=dark?0.08:0.14; c.strokeStyle=dark?"#B9E5D7":"#9FB5B7"; c.lineWidth=1;
+  for(let x=0;x<W;x+=80) { c.beginPath(); c.moveTo(x,0); c.lineTo(x,H); c.stroke(); }
+  for(let y=0;y<H;y+=80) { c.beginPath(); c.moveTo(0,y); c.lineTo(W,y); c.stroke(); }
+  c.restore();
+  c.save(); c.globalAlpha=dark?0.1:0.17;
+  circle(1190+Math.sin(t*.7)*28,80,214,dark?C.aqua:C.orangeSoft);
+  circle(74+Math.cos(t*.5)*16,686,145,dark?C.lilac:C.aqua);
+  c.restore();
+}
+function brand(dark=false) {
+  circle(66,52,13,C.orange); circle(62,50,2.3,C.ink); circle(70,50,2.3,C.ink);
+  text("PATCHY",91,61,24,dark?C.cream:C.ink,800);
+  text("FACTORY",210,59,17,dark?"#A7C4C7":C.muted,750);
+  chip("DEEP LANE",1084,33,dark?C.aqua:C.ink,dark?"#21434A":"#E8EAE4",144);
+}
+function footer(t,dark=false) {
+  const x=64,y=676,w=1152;
+  rect(x,y,w,5,3,dark?"#2D454A":"#CED8D2");
+  rect(x,y,w*clamp(t/DURATION),5,3,dark?C.aqua:C.orange);
+  text("OPT-IN SKILL  ·  HOST-EXECUTED",64,656,15,dark?"#A9C5C5":C.muted,700);
+  text("MULTI-AGENT WORKFLOW",1216,656,15,dark?"#A9C5C5":C.muted,700,"right");
+}
+function withScene(t,a,b,fn) {
+  const alpha=show(t,a,b); if(alpha<=0) return;
+  c.save(); c.globalAlpha=alpha; fn(t-a,alpha); c.restore();
+}
+function sceneOpening(u) {
+  const p=enter(u,0.15,0.9);
+  c.save(); c.globalAlpha=.8; circle(1010,370,250,C.orangeSoft); circle(1030,385,183,"#FFEAD8"); c.restore();
+  if (mascot.complete && mascot.naturalWidth) {
+    const q=enter(u,.3,.8);
+    c.save(); c.globalAlpha=q; c.drawImage(mascot,lerp(980,795,q),175+Math.sin(u*2.6)*7,450,450); c.restore();
+  }
+  text("One task.",86,226,86,C.ink,800);
+  c.save(); c.globalAlpha=enter(u,.4,.7);
+  text("A coordinated",86,320,72,C.ink,800);
+  text("crew.",86,407,86,C.orange,800);
+  rect(87,433,lerp(0,390,enter(u,.7,.8)),8,4,C.aqua);
+  c.restore();
+  text("Parallel insight. One writer. Independent review.",88,491,27,C.muted,550);
+  chip("@patchy-factory",88,538,C.ink,C.yellow);
+  const words=[["MAP",C.aqua,390],["BUILD",C.orange,522],["REVIEW",C.lilac,654]];
+  words.forEach(([s,col,x],i)=>{ const z=enter(u,1+i*.22,.55); c.save(); c.globalAlpha=z; rect(x,lerp(614,560,z),112,50,25,C.white,col,2,10); text(s,x+56,592,18,C.ink,800,"center"); c.restore(); });
+}
+function agentCard(x,y,title,subtitle,color,soft,symbol) {
+  rect(x,y,300,126,24,C.white,color,2,18);
+  circle(x+54,y+55,31,soft); text(symbol,x+54,y+65,31,color,800,"center");
+  text(title,x+105,y+54,26,C.ink,800);
+  text(subtitle,x+105,y+85,19,C.muted,550);
+  chip("READ ONLY",x+178,y-17,color,soft,122);
+}
+function sceneParallel(u) {
+  const h=enter(u,0,.6);
+  text("Parallel thinking.",84,164,69,C.ink,800);
+  text("Two read-only agents start from the same task contract.",86,213,26,C.muted,550);
+  rect(83,307,290,235,26,C.white,C.orange,2,18);
+  chip("TASK CONTRACT",108,330,C.ink,C.orangeSoft,181);
+  text("What must change?",108,397,30,C.ink,750);
+  text("What must stay true?",108,444,23,C.muted,550);
+  text("Which checks matter?",108,483,23,C.muted,550);
+  const q1=enter(u,.36,.75),q2=enter(u,.55,.75);
+  c.save(); c.globalAlpha=q1; agentCard(470,lerp(250,283,q1),"MAPPER","Owner · callers · tests",C.aqua,C.aquaSoft,"M"); c.restore();
+  c.save(); c.globalAlpha=q2; agentCard(470,lerp(510,456,q2),"DESIGNER","Options · boundaries",C.lilac,C.lilacSoft,"D"); c.restore();
+  rect(907,361,277,154,24,"#E9F5F0","#91DCCE",2,14);
+  text("ONE SHARED BRIEF",931,395,18,C.muted,800);
+  text("Evidence + options",931,441,27,C.ink,800);
+  text("ready for the builder",931,475,21,C.muted,550);
+  line(373,402,458,345,C.aqua,4); line(373,435,458,519,C.lilac,4);
+  line(770,345,893,414,C.aqua,4); line(770,519,893,465,C.lilac,4);
+  movingDot(373,402,458,345,(u*.43)%1,C.aqua);
+  movingDot(373,435,458,519,(u*.43+.23)%1,C.lilac);
+  movingDot(770,345,893,414,(u*.43+.49)%1,C.aqua);
+  movingDot(770,519,893,465,(u*.43+.71)%1,C.lilac);
+  chip("2 ACTIVE MAX",975,549,C.ink,C.yellow,174);
+}
+function sceneBuilder(u) {
+  text("One writer. One worktree.",83,164,67,C.ink,800);
+  text("The builder receives the brief and makes the focused change.",85,214,26,C.muted,550);
+  const p=enter(u,.2,.8);
+  rect(78,320,270,223,26,C.white,C.line,2,12);
+  chip("FROM PARALLEL WORK",102,342,C.ink,C.aquaSoft,225);
+  text("Mapper evidence",103,409,23,C.ink,700);
+  text("Designer decision",103,451,23,C.ink,700);
+  text("Task contract",103,493,23,C.ink,700);
+  line(348,431,401,431,C.orange,5);
+  movingDot(348,431,401,431,(u*.7)%1,C.orange,11);
+  rect(406,276,783,335,28,C.ink,null,0,23);
+  chip("BUILDER · ONLY WRITER",436,302,C.ink,C.orange,248);
+  chip("ISOLATED WORKTREE",922,302,C.ink,C.aqua,233);
+  rect(437,365,720,210,18,"#203740");
+  circle(465,388,5,C.orange);circle(482,388,5,C.yellow);circle(499,388,5,C.aqua);
+  text("src / existing owner",523,396,20,"#BED7D1",700);
+  const code=[
+    ["reuse the existing code path",C.aqua],
+    ["preserve behavior and invariants",C.yellow],
+    ["make the focused change",C.orange]
+  ];
+  code.forEach(([s,col],i)=>{
+    const z=enter(u,.6+i*.5,.55);
+    c.save();c.globalAlpha=z;
+    rect(463,421+i*44,lerp(0,640,z),34,10,"#2B444C");
+    circle(481,438+i*44,5,col);text(s,502,444+i*44,21,C.cream,600);
+    c.restore();
+  });
+  c.save(); c.globalAlpha=p; chip("CANDIDATE C-01",968,588,C.ink,C.yellow,182); c.restore();
+}
+function reviewer(x,y,color,soft,initial,title,details) {
+  rect(x,y,330,126,23,C.white,color,2,18);
+  circle(x+48,y+57,27,soft); text(initial,x+48,y+66,27,color,800,"center");
+  text(title,x+92,y+52,19,C.ink,800);
+  text(details,x+92,y+85,19,C.muted,550);
+}
+function sceneReview(u) {
+  text("Freeze. Check. Review.",82,162,70,C.ink,800);
+  text("Every result must match the same candidate and contract.",84,211,26,C.muted,550);
+  rect(80,307,260,233,26,C.ink,null,0,20);
+  chip("FROZEN CANDIDATE",107,330,C.ink,C.yellow,211);
+  text("C-01",112,448,79,C.cream,800);
+  text("one exact commit",112,491,21,"#C3D7D6",550);
+  line(341,418,399,418,C.orange,5);
+  movingDot(341,418,399,418,(u*.7)%1,C.orange,10);
+  rect(407,298,336,253,26,C.white,C.line,2,15);
+  text("RUN THE CHECKS",436,339,21,C.muted,800);
+  [["Focused checks",C.aqua],["Diff + scope",C.orange],["Recorded outputs",C.lilac]].forEach(([s,col],i)=>{
+    const z=enter(u,.45+i*.3,.6);
+    rect(433,363+i*55,282,43,13,"#F2F5F1");
+    circle(459,384+i*55,9,z>.8?col:"#CAD7D3");
+    text(s,484,391+i*55,21,C.ink,650);
+  });
+  const a=enter(u,1.4,.7);
+  c.save();c.globalAlpha=a;
+  reviewer(836,284,C.aqua,C.aquaSoft,"C","Contract reviewer","Behavior · proof");
+  reviewer(836,448,C.lilac,C.lilacSoft,"I","Implementation reviewer","Reuse · fit");
+  c.restore();
+  line(743,415,819,347,C.aqua,4);
+  line(743,432,819,512,C.lilac,4);
+  movingDot(743,415,819,347,(u*.46)%1,C.aqua,8);
+  movingDot(743,432,819,512,(u*.46+.35)%1,C.lilac,8);
+  chip("BLOCKER → REPAIR C-02 → RERUN CHECKS + REVIEWS",237,581,C.ink,C.yellow,812);
+}
+function sceneHandoff(u) {
+  const p=enter(u,.1,.8);
+  rect(0,0,W,H,0,"#11242D");
+  c.save();c.globalAlpha=.28; circle(1060,410,290,C.aqua);circle(855,190,145,C.orange);c.restore();
+  c.save();c.globalAlpha=p;
+  text("Ready for",79,186,76,C.cream,800);
+  text("your decision.",79,279,76,C.aqua,800);
+  rect(84,330,627,260,25,C.cream,null,0,26);
+  chip("HANDOFF RECEIPT",111,355,C.ink,C.orangeSoft,204);
+  [["Task + constraints","recorded"],["Final candidate","C-01 or repaired C-02"],["Checks + reviews","bound to that candidate"],["Gaps","named honestly"]].forEach(([a,b],i)=>{
+    const y=414+i*42;
+    text(a,116,y,19,C.muted,700);text(b,329,y,21,C.ink,700);
+    if(i<3) line(112,y+10,677,y+10,"#E3E8E2",1);
+  });
+  if(mascot.complete && mascot.naturalWidth) c.drawImage(mascot,790,218+Math.sin(u*2)*5,425,425);
+  text("The host runs the agents. You decide.",84,633,25,C.cream,600);
+  c.restore();
+}
+function renderAt(seconds) {
+  const t=Math.max(0,Math.min(DURATION,seconds));
+  const dark=t>=16.25;
+  grid(t,dark);
+  withScene(t,0,4.1,sceneOpening);
+  withScene(t,3.6,8.3,sceneParallel);
+  withScene(t,7.8,12.5,sceneBuilder);
+  withScene(t,12,16.9,sceneReview);
+  withScene(t,16.4,DURATION+.5,sceneHandoff);
+  brand(dark);footer(t,dark);
+}
+window.renderAt=renderAt;
+let start=performance.now(), playing=true;
+function play(now) { if(playing) renderAt(((now-start)/1000)%DURATION); requestAnimationFrame(play); }
+requestAnimationFrame(play);
+document.querySelector("#replay").onclick=()=>{start=performance.now();playing=true;};
+document.querySelector("#export").onclick=()=>{location.href="./patchy-factory-motion.mp4";};
+mascot.onload=()=>renderAt(0);
+renderAt(0);
+</script>
+</body>
+</html>
+
