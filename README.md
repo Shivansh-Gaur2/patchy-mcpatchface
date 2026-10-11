@@ -1,18 +1,18 @@
 <p align="center">
-  <img src="assets/patchy-mascot.png" width="220" alt="Patchy McPatchface, a raccoon holding a clipboard beside a terminal">
+  <img src="assets/patchy-mascot.png" width="220" alt="Patchy McPatchface, a raccoon beside a terminal">
 </p>
 
 <h1 align="center">Patchy McPatchface</h1>
 
 <p align="center">
-  <em>Your codebase raccoon with a clipboard.</em><br>
+  <em>Your codebase raccoon that finds the right code before adding more.</em><br>
   Finds the old thing before building a new one.
 </p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/Codex-plugin%20ready-D97706?style=flat-square" alt="Codex plugin ready">
   <a href="https://github.com/Shivansh-Gaur2/patchy-mcpatchface/actions/workflows/validate.yml"><img src="https://github.com/Shivansh-Gaur2/patchy-mcpatchface/actions/workflows/validate.yml/badge.svg?branch=master" alt="Validation status"></a>
-  <img src="https://img.shields.io/badge/skills-4-1f2937?style=flat-square" alt="Four focused skills">
+  <img src="https://img.shields.io/badge/skills-9-1f2937?style=flat-square" alt="Nine focused skills">
   <img src="https://img.shields.io/badge/proof-behavior%20first-0F766E?style=flat-square" alt="Behavior first proof">
   <img src="https://img.shields.io/badge/license-MIT-1f2937?style=flat-square" alt="MIT license">
 </p>
@@ -23,7 +23,7 @@ I built Patchy because I got tired of typing the same five sentences into every 
 
 Every single time. So I turned those sentences into a skill and gave it a face.
 
-Patchy is a raccoon with a clipboard. It rummages through your codebase before it writes anything, finds the thing that already owns the decision, and reuses it instead of quietly adding a parallel copy next to it. It keeps to the design patterns and boundaries your repo already committed to, picks the smallest change that actually fits, and then tells you plainly what the proof covers and what it doesn't. No heroic refactors you didn't ask for. Nothing that looks clever in the diff and breaks on Monday.
+Patchy is a codebase raccoon. Before writing, it rummages through the repository to find the behavior and the code that owns it. It reuses that owner, follows the repository's boundaries, makes the smallest complete change, and reports what the evidence proves and what remains unknown.
 
 It also speaks [TOON](references/toon-receipts.md) for the repetitive evidence bits (callers, reuse candidates, test results) so you burn fewer tokens on rows that all look the same. Prose stays prose. Tool payloads stay untouched.
 
@@ -74,17 +74,26 @@ The repository includes a Codex marketplace, a plugin bundle, a portable `SKILL.
 | --- | --- |
 | `patchy` | A feature, bug fix, or refactor where scope, behavior, reuse, or proof could go wrong. |
 | `patchy-rummage` | A business-logic or code-path explanation without editing files. |
-| `patchy-clipboard` | An existing diff that needs a scope, reuse, and proof audit. |
+| `patchy-review` | An existing diff that needs separate contract and implementation review. |
+| `patchy-clipboard` | Compatibility entry point for `patchy-review`. |
+| `patchy-factory` | One explicitly requested multi-stage job with specialist agent roles, repository checks, candidate-bound review, and a saved handoff. |
 | `patchy-help` | A quick reminder of the entry points. |
 
 The working loop is simple:
 
 ```text
 Constraints → capture protected surfaces and exclusions
-Rummage    → find the behavior and the code that owns it
-Patch       → make the smallest cohesive change that fits
-Clipboard   → report what passed, what did not run, and what is still unknown
+Rummage     → find the behavior and the code that owns it
+Patch       → make the smallest complete change that fits
+Review      → check contract fit and implementation fit separately
+Factory     → coordinate a longer job and leave a reviewable result
 ```
+
+Use `patchy-factory` when parallel investigation or independent review can repay the extra context and setup. Fast jobs use a mapper, one builder, and one reviewer who checks contract behavior and implementation fit. Deep jobs add a designer and can assign those two review questions to independent reviewers in parallel. Add focused security review only when the change reaches a security boundary. `patchy-factory-map`, `patchy-factory-plan`, and `patchy-factory-review` carry the role instructions; the builder follows `patchy`. Codex agent profile templates with starting reasoning budgets are included under `agents/factory/` for users who want named custom profiles.
+
+Factory records the base and candidate, bounds repair rounds, and stops for your decision. It does not merge, push, release, or deploy. Its worktree protects the active checkout from routine editing conflicts; it is not an operating-system sandbox. The plugin installs skills, not Codex agent profiles. Hosts without subagents may run stages in sequence, but the receipt labels that as sequential review instead of independent review. A high-risk task that requires separate review stops when its host cannot provide it.
+
+Patchy also adapts selected practices from [Ponytail](https://github.com/DietrichGebert/ponytail) and [Matt Pocock's engineering skills](https://github.com/mattpocock/skills): understand before minimizing, and keep contract review separate from implementation review. These are design influences, not measured evidence that Patchy improves code quality or speed. See [the practice notes](skills/patchy/references/composed-practices.md) for what Patchy adopted and what it left out. The software-factory structure draws on specialist lanes in [Super Board](https://github.com/EricTechPro/super-board) and orchestration, worktrees, and review in [Zazen's software factory](https://github.com/zazencodes/zazencodes-season-3/tree/main/src/software-factory-claude-code); those projects are references, not Patchy benchmark results. Codex documents plugin skill packaging and custom subagent profiles as separate setup paths ([plugin packaging](https://developers.openai.com/plugins/build/plugins), [custom subagent profiles](https://learn.chatgpt.com/docs/agent-configuration/subagents)); Factory's named profiles therefore remain opt-in templates.
 
 Patchy only brings up an alternative design when the evidence says the route you asked for would duplicate a decision, harden a boundary that's already shaky, or leave the same bug waiting to happen again. The patch you asked for stays separate from that suggestion unless you say go.
 
@@ -105,7 +114,7 @@ codex plugin marketplace add Shivansh-Gaur2/patchy-mcpatchface --ref master
 codex plugin add patchy-mcpatchface@patchy-mcpatchface
 ```
 
-Start a new Codex task after installation. Invoke the plugin skills with `@patchy`, `@patchy-rummage`, or `@patchy-clipboard`.
+Start a new Codex task after installation. Invoke the plugin skills with `@patchy`, `@patchy-rummage`, `@patchy-review`, or `@patchy-factory`. Existing `@patchy-clipboard` invocations continue to work as a compatibility entry point.
 
 The marketplace is published from `master`. In this checkout, the validated release line is on `master`, while the cached `origin/main` ref points to the older portable-skill history. If GitHub shows an older version, confirm the public branch state, then either make `master` the repository's default branch or merge the release line into `main` and publish from `main` consistently. After changing the source, remove the cached marketplace entry and reinstall:
 
@@ -176,7 +185,7 @@ If Patchy over-explained, missed an obvious existing helper, widened scope when 
 
 ## Why the name?
 
-Patchy is that coworker who crawls out from under a pile of old code holding the exact helper you were about to rewrite from scratch. The clipboard has the edge cases you forgot to ask about.
+Patchy is that coworker who crawls out from under a pile of old code with the exact helper you were about to rewrite from scratch.
 
 Also raccoons go through other people's trash for a living. Felt appropriate.
 
