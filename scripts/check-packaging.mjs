@@ -48,7 +48,7 @@ if (plugin.skills !== "./skills/") throw new Error("plugin manifest must expose 
 if (plugin.author?.name !== "Shivansh Gaur") throw new Error("plugin author metadata is incomplete");
 if (!plugin.description || plugin.license !== "MIT" || !Array.isArray(plugin.keywords) || !plugin.keywords.length) throw new Error("plugin metadata is incomplete");
 if (!plugin.interface?.displayName || !plugin.interface?.shortDescription || !plugin.interface?.longDescription) throw new Error("plugin interface copy is incomplete");
-if (plugin.interface.category !== "Productivity" || !Array.isArray(plugin.interface.defaultPrompt) || !plugin.interface.defaultPrompt.length) throw new Error("plugin interface metadata is incomplete");
+if (plugin.interface.category !== "Productivity" || !Array.isArray(plugin.interface.defaultPrompt) || !plugin.interface.defaultPrompt.length) throw new Error("plugin interface metadata is invalid");
 for (const asset of [plugin.interface.logo, plugin.interface.logoDark]) {
   if (typeof asset !== "string" || !asset.startsWith("./")) throw new Error("plugin logo paths must be relative");
   await access(resolve(root, asset));
@@ -92,8 +92,9 @@ for (const [file, name, reasoning, sandbox] of [
 }
 
 const portableSkill = await readFile(resolve(root, "SKILL.md"), "utf8");
-if (!portableSkill.startsWith("---\nname: patchy-mcpatchface\n")) throw new Error("portable skill has invalid frontmatter");
+if (!portableSkill.startsWith("---\nname: patchy\n")) throw new Error("portable skill must remain directly invokable as patchy");
 if (!portableSkill.includes("skills/patchy/SKILL.md")) throw new Error("portable skill must point to the canonical workflow");
+if (portableSkill.includes("patchy-mcpatchface")) throw new Error("portable skill must use the short Patchy identity");
 
 const marketEntry = marketplace.plugins?.find((entry) => entry.name === plugin.name);
 if (marketplace.name !== plugin.name || !marketEntry) throw new Error("marketplace must expose this plugin by name");
