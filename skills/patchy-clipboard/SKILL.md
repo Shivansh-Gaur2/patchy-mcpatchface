@@ -2,6 +2,8 @@
 name: patchy-clipboard
 description: Compatibility entry point for the Patchy review skill.
 disable-model-invocation: true
+metadata:
+  internal: true
 ---
 
 # Patchy Clipboard compatibility entry point

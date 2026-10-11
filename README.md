@@ -151,25 +151,17 @@ Factory does not merge, push, release, or deploy. Its worktree helps isolate rou
 
 ## Install another way
 
-### Portable skill bundle
+### Skills CLI and skills.sh
 
-Clone the repository into your Codex skills directory, then start a new chat:
-
-```powershell
-git clone https://github.com/Shivansh-Gaur2/patchy-mcpatchface.git "$env:USERPROFILE\.codex\skills\patchy-mcpatchface"
-```
-
-The root [`SKILL.md`](SKILL.md) points to the canonical workflow in [`skills/patchy/SKILL.md`](skills/patchy/SKILL.md). `AGENTS.md` and [Copilot instructions](.github/copilot-instructions.md) provide instruction-only fallbacks for hosts that read those files; they do not add plugin commands or lifecycle hooks.
-
-### `skills.sh`
-
-This repository can also be installed with [`skills.sh`](https://github.com/isiahhill/skills.sh):
+Install the full Patchy skill set for any supported agent:
 
 ```sh
-npx skills add Shivansh-Gaur2/patchy-mcpatchface --skill patchy-mcpatchface --agent codex
+npx skills add https://github.com/Shivansh-Gaur2/patchy-mcpatchface/tree/master/skills --skill '*'
 ```
 
-Replace `codex` with an agent supported by `skills.sh`, then start a new agent session.
+The URL points directly to the skills collection, so the repository's root `SKILL.md` cannot shadow the standalone skills. `--skill '*'` selects the full public set; choose your supported agent and global or project scope when prompted. The legacy `patchy-clipboard` alias stays out of normal installs. Start a new agent session after installation.
+
+The core command is `/patchy`. Its canonical instructions live in [`skills/patchy/SKILL.md`](skills/patchy/SKILL.md). `AGENTS.md` and [Copilot instructions](.github/copilot-instructions.md) provide instruction-only fallbacks for hosts that read those files; they do not add plugin commands or lifecycle hooks.
 
 ## How the repository is organized
 

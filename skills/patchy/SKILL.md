@@ -40,7 +40,7 @@ Do not load the whole repository to answer a scoped request. Start with the task
 
 Keep compact evidence with a locator and a label: **Observed**, **Inferred**, or **Unknown**. Do not turn search output into a speculative codebase summary. If the request is an explanation, answer the narrow question first and offer further tracing only when it would materially help.
 
-Use [compact receipts](../../references/toon-receipts.md) for three or more same-shaped evidence records. Use prose or a short Markdown list for a one-off fact, a decision, or any irregular structure. Never replace configuration, API payloads, source code, or required JSON with TOON.
+Use [compact receipts](references/toon-receipts.md) for three or more same-shaped evidence records. Use prose or a short Markdown list for a one-off fact, a decision, or any irregular structure. Never replace configuration, API payloads, source code, or required JSON with TOON.
 
 ## Rummage before designing
 
@@ -93,7 +93,7 @@ Verify in proportion to risk:
 5. Exercise changed module, persistence, queue, provider, or API boundaries with the smallest available integration or contract check.
 6. Review the final diff and search again for duplicate logic, accidental files, weakened errors, and scope drift.
 
-Read [proof tiers](../../references/proof-tiers.md) when the confidence level needs to be explicit. When a new behavior has no existing test, derive scenarios from its decision contract, add the closest focused seam available, and state the remaining gap. TDD is useful only when the test expresses the behavior that now exists; a green unrelated suite is not proof.
+Read [proof tiers](references/proof-tiers.md) when the confidence level needs to be explicit. When a new behavior has no existing test, derive scenarios from its decision contract, add the closest focused seam available, and state the remaining gap. TDD is useful only when the test expresses the behavior that now exists; a green unrelated suite is not proof.
 
 ## Leave receipts
 

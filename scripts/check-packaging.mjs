@@ -10,8 +10,11 @@ const required = [
   ".codex-plugin/plugin.json",
   "SKILL.md",
   "skills/patchy/SKILL.md",
+  "skills/patchy/references/proof-tiers.md",
+  "skills/patchy/references/toon-receipts.md",
   "skills/patchy/references/composed-practices.md",
   "skills/patchy-rummage/SKILL.md",
+  "skills/patchy-rummage/references/toon-receipts.md",
   "skills/patchy-clipboard/SKILL.md",
   "skills/patchy-review/SKILL.md",
   "skills/patchy-help/SKILL.md",
@@ -64,6 +67,9 @@ const factorySkill = await readFile(resolve(root, "skills/patchy-factory/SKILL.m
 const factoryReviewer = await readFile(resolve(root, "skills/patchy-factory-review/SKILL.md"), "utf8");
 const reviewerProfile = await readFile(resolve(root, "agents/factory/factory_reviewer.toml"), "utf8");
 const clipboardAlias = await readFile(resolve(root, "skills/patchy-clipboard/SKILL.md"), "utf8");
+if (!clipboardAlias.includes("metadata:\n  internal: true")) {
+  throw new Error("patchy-clipboard compatibility alias must stay out of normal bundle installs");
+}
 if (factorySkill.includes("patchy-clipboard") || factoryReviewer.includes("patchy-clipboard") || reviewerProfile.includes("patchy-clipboard")) {
   throw new Error("Factory review must not depend on the patchy-clipboard compatibility entry point");
 }
@@ -94,6 +100,30 @@ for (const [file, name, reasoning, sandbox] of [
 const portableSkill = await readFile(resolve(root, "SKILL.md"), "utf8");
 if (!portableSkill.startsWith("---\nname: patchy-mcpatchface\n")) throw new Error("portable skill has invalid frontmatter");
 if (!portableSkill.includes("skills/patchy/SKILL.md")) throw new Error("portable skill must point to the canonical workflow");
+
+const coreSkill = await readFile(resolve(root, "skills", "patchy", "SKILL.md"), "utf8");
+if (!coreSkill.startsWith("---\nname: patchy\n")) throw new Error("core skill must remain directly invokable as patchy");
+for (const [skillPath, canonicalPath] of [
+  ["skills/patchy/references/proof-tiers.md", "references/proof-tiers.md"],
+  ["skills/patchy/references/toon-receipts.md", "references/toon-receipts.md"],
+  ["skills/patchy-rummage/references/toon-receipts.md", "references/toon-receipts.md"],
+]) {
+  const bundled = await readFile(resolve(root, skillPath), "utf8");
+  const canonical = await readFile(resolve(root, canonicalPath), "utf8");
+  if (bundled !== canonical) throw new Error(`${skillPath} is out of sync with ${canonicalPath}`);
+}
+
+const readme = await readFile(resolve(root, "README.md"), "utf8");
+const installSection = readme.match(/### Skills CLI and skills\.sh[\s\S]*?(?=\n## |$)/)?.[0];
+if (!installSection?.includes("https://github.com/Shivansh-Gaur2/patchy-mcpatchface/tree/master/skills")) {
+  throw new Error("README must install directly from the standalone skills collection");
+}
+if (!installSection.includes("--skill '*'") || installSection.includes("--agent github-copilot")) {
+  throw new Error("README must provide an agent-neutral install for the full public skill set");
+}
+if (/--skill\s+patchy(?:\s|$)/.test(installSection)) {
+  throw new Error("bundle install must select the skills collection, not only the core skill");
+}
 
 const marketEntry = marketplace.plugins?.find((entry) => entry.name === plugin.name);
 if (marketplace.name !== plugin.name || !marketEntry) throw new Error("marketplace must expose this plugin by name");
