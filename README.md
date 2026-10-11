@@ -78,9 +78,9 @@ The amount of investigation should fit the task. A tiny local edit can use the n
 
 ### Watch Factory's Deep lane in motion
 
-[![Patchy Factory multi-agent workflow](assets/patchy-factory-motion.gif)](assets/patchy-factory-motion.gif)
+[![Patchy Factory multi-agent workflow](assets/patchy-factory-motion.gif)](assets/patchy-factory-motion.mp4)
 
-This 19-second motion graphic follows the opt-in Deep lane: mapper and designer investigate in parallel, one builder edits, checks bind to a frozen candidate, and two independent reviewers assess separate axes before the human handoff. It visualizes the documented workflow; it is not a recording of a live agent run. The host must provide the agent contexts, worktrees, and tools.
+This 21-second motion graphic follows the opt-in Deep lane: mapper and designer investigate in parallel, one builder edits, checks bind to a frozen candidate, and two independent reviewers assess separate axes before the human handoff. [Watch the full MP4](assets/patchy-factory-motion.mp4). It visualizes the documented workflow; it is not a recording of a live agent run. The host must provide the agent contexts, worktrees, and tools.
 
 
 ### What is installed today
