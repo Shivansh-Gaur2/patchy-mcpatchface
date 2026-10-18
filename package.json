@@ -13,6 +13,6 @@
   "license": "MIT",
   "devDependencies": {
     "@dqbd/tiktoken": "^1.0.22",
-    "@toon-format/toon": "^4.1.1"
+    "@toon-format/toon": "^4.4.0"
   }
 }
